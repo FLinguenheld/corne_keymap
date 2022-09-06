@@ -28,10 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-//#define TAPPING_FORCE_HOLD
-//#define TAPPING_TERM 100
 
-#ifdef RGBLIGHT_ENABLE
+/* #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD
     #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
@@ -46,6 +44,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_HUE_STEP 10
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
-#endif
+#endif */
 
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+
+
+// Auto shift
+#define AUTO_SHIFT_TIMEOUT 122
+#define NO_AUTO_SHIFT_SPECIAL
+#define NO_AUTO_SHIFT_NUMERIC
+
+#define UNICODE_SELECTED_MODES UC_LNX
+
+#define TAPPING_FORCE_HOLD
+#define TAPPING_TERM 122
+#define IGNORE_MOD_TAP_INTERRUPT

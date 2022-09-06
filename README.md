@@ -8,17 +8,20 @@ My personal keymap for corne
 #### Install
 
 Copy this repo in the folder
-    /home/pousti/qmk_firmware/keyboards/crkbd/
+
+    ~/qmk_firmware/keyboards/crkbd/
 
 #### Compile
 
-Go inside the folder and launch
+*Inside the folder or not*
+
     qmk compile
+    qmk compile -kb crkbd/rev1 -km corne_keymap
 
 #### Flash
 
-Go inside the folder and launch
     qmk flash -bl dfu
+    qmk flash -kb crkbd/rev1 -km corne_keymap -bl dfu
 
 
 #### Links
