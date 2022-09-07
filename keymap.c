@@ -22,87 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "features/french.h"
 
 
-enum test {
-    TEST1,
-    TEST2,
-    
-};
+#include "features/tap_dance.c"
 
 
-// Tap Dance declarations
-enum {
-    TD_ESC_CAPS,
-};
-
-
-
-
-
-typedef struct {
-    uint16_t tap;
-    uint16_t hold;
-    uint16_t held;
-} tap_dance_tap_hold_t;
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    qk_tap_dance_action_t *action;
-
-    switch (keycode) {
-        case TD(TD_ESC_CAPS):  // list all tap dance keycodes with tap-hold configurations
-            action = &tap_dance_actions[TD_INDEX(keycode)];
-            if (!record->event.pressed && action->state.count && !action->state.finished) {
-                tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
-                tap_code16(tap_hold->tap);
-            }
-    }
-    return true;
-}
-
-void tap_dance_tap_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (state->pressed) {
-        if (state->count == 1
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
-            register_code16(tap_hold->hold);
-            tap_hold->held = tap_hold->hold;
-        } else {
-            register_code16(tap_hold->tap);
-            tap_hold->held = tap_hold->tap;
-        }
-    }
-}
-
-void tap_dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
-    tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)user_data;
-
-    if (tap_hold->held) {
-        // SEND_STRING("é");
-            // register_code16(tap_hold->held);
-        // unregister_code16(tap_hold->held);
-        // send_unicode_string("0x00E9");
-        // send_unicode_string("0x00EA");
         // SEND_STRING("aurnisetaurie");
-        // UC(0x00E9);
-        tap_hold->held = 0;
-    }
-}
-
-#define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
-    { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
-
-
-
-
-// Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
-    // [TD_ESC_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_E, KC_Y),
-    [TD_ESC_CAPS] = ACTION_TAP_DANCE_TAP_HOLD(KC_E, CUBE),
-};
+        // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
 
 
 
@@ -111,28 +35,31 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB, UC(0x30C4),  KC_W,    UC(0x00E9),   KC_GRV ,    XP(INFINIT, X(E_CIRC_MAJ)),                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      MT(MOD_LGUI, KC_ESC),    KC_A,    KC_S,    KC_D,    KC_F,    BP_EACU,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    TD(TD_ESC_CAPS),    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ESC,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_RALT
-                                      //`--------------------------'  `--------------------------'
 
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+       KC_TAB               ,     BP_Z      ,    BP_EACU    ,     BP_P      ,     BP_O      ,        BP_ECIR        ,                BP_AGRV        ,      BP_V     ,      BP_D     ,      BP_L     ,      BP_J     ,     TD(TD_BSPC_DEL)   ,
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+      GUI_T(KC_ESC)         ,     BP_A      ,     BP_U      ,     BP_I      ,     BP_E      ,   TD(TD_EXCLA_QUEST)  ,                 BP_C          ,      BP_T     ,      BP_S     ,      BP_R     ,      BP_N     ,     BP_M              ,
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+      TD(TD_ALT_TREMA)      ,     BP_B      ,     BP_Y      ,     BP_X      ,     BP_W      ,   TD(TD_QUOTE_3DOTS)  ,                 BP_K          ,      BP_Q     ,      BP_G     ,      BP_H     ,      BP_F     ,  MT(MOD_RSFT, BP_DCIR),
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+  //                                                  |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                MO(4)     ,   LT(1, BP_SCLN)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_COLN)  ,       MO(5)
+  //                                                  |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
   [1] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______,  KC_SPC,     KC_ENT,   MO(3), KC_RALT
-                                      //`--------------------------'  `--------------------------'
+
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+            _______         ,    XXXXXXX    ,    BP_GRV     ,   BP_QUOTE    ,   BP_DQUO     ,        XXXXXXX        ,               XXXXXXX         ,   BP_HASH  ,    BP_D    ,    BP_L    ,    BP_J    ,     TD(TD_BSPC_DEL)   ,
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+            _______         ,    XXXXXXX    , TD(CURLY_BTS) , TD(BRACKETS)  , TD(PARENTHE)  ,        XXXXXXX        ,               XXXXXXX         ,    BP_T    ,    BP_S    ,    BP_R    ,    BP_N    ,     BP_M              ,
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+            _______         ,    XXXXXXX    ,    BP_Y       ,     BP_X      ,    BP_W       ,        XXXXXXX        ,               XXXXXXX         ,    BP_Q    ,    BP_G    ,    BP_H    ,    BP_F    ,  MT(MOD_RSFT, BP_DCIR),
+  //|-----------------------+---------------+---------------+---------------+---------------+-----------------------|       |-----------------------+---------------+---------------+---------------+---------------+-----------------------|
+  //                                                  |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                MO(4)     ,   LT(1, BP_SCLN)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_COLN)  ,       MO(5)
+  //                                                  |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
   [2] = LAYOUT_split_3x6_3(
@@ -172,4 +99,7 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
 }
+
+
+
 
