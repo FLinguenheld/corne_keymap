@@ -4,9 +4,13 @@ enum {
     TD_ALT_TREMA, // The standard Mod-Tap doesn't work with "
     TD_EXCLA_QUEST,
     TD_QUOTE_3DOTS,
-    TD_PARENTHE,
-    TD_BRACKETS,
-    TD_CURLY_BTS,
+
+    TD_PARENT,
+    TD_BRACK,
+    TD_CURLY_B,
+    TD_SLASHS,
+
+    TD_CURRENCY,
 
 
     TD_ESC_CAPS,
@@ -29,9 +33,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_ALT_TREMA):
         case TD(TD_EXCLA_QUEST):
         case TD(TD_QUOTE_3DOTS):
-        case TD(TD_PARENTHE):
-        case TD(TD_BRACKETS):
-        case TD(TD_CURLY_BTS):
+        case TD(TD_PARENT):
+        case TD(TD_BRACK):
+        case TD(TD_CURLY_B):
+        case TD(TD_SLASHS):
+        case TD(TD_CURRENCY):
 
         
 
@@ -82,9 +88,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES),
     [TD_QUOTE_3DOTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_QUOT, BP_ELLP),
 
-    [TD_PARENTHE] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN),
-    [TD_BRACKETS] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC),
-    [TD_CURLY_BTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR),
+    [TD_PARENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN),
+    [TD_BRACK] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC),
+    [TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR),
+    [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_BSLS, BP_SLSH),
+
+    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO),
 
 
 
