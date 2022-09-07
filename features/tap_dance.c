@@ -11,6 +11,7 @@ enum {
     TD_SLASHS,
 
     TD_CURRENCY,
+    TD_PERCENT,
 
 
     TD_ESC_CAPS,
@@ -38,6 +39,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CURLY_B):
         case TD(TD_SLASHS):
         case TD(TD_CURRENCY):
+        case TD(TD_PERCENT):
 
         
 
@@ -94,6 +96,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_BSLS, BP_SLSH),
 
     [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO),
+    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM),
 
 
 
