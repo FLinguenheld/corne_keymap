@@ -1,7 +1,7 @@
 // General enum for all tap dance
 enum {
     TD_BSPC_DEL,
-    TD_ALT_TREMA, // The standard Mod-Tap doesn't work with "
+    TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
     TD_EXCLA_QUEST,
     TD_QUOTE_3DOTS,
 
@@ -46,7 +46,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_BSPC_DEL):  // list here all tap dance keycodes with tap-hold configurations
         case TD(TD_FLO):
-        case TD(TD_ALT_TREMA):
+        case TD(TD_TREMA_ALT):
         case TD(TD_EXCLA_QUEST):
         case TD(TD_QUOTE_3DOTS):
         case TD(TD_PARENT):

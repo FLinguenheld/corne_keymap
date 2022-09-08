@@ -19,43 +19,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include <keymap_bepo.h>
+
 #include "features/french.h"
+#include "features/tap_dance.c"
 
 
-#include "features/lt_semicolon.c"
-
-
+// https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
         // SEND_STRING("aurnisetaurie");
         // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
 
 
-
-
-
-
-#include "features/tap_dance.c"
-
-
+enum layers { 
+    _BASE, 
+    _LOWER, 
+    _RAISE, 
+    _ARROWS,
+    _MOUSE,
+    _FN,
+};
 
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL),
-    [TD_ALT_TREMA] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT),
-    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES),
-    [TD_QUOTE_3DOTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_QUOT, BP_ELLP),
+    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL), // Backspace - Del
+    [TD_TREMA_ALT] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT), // Trema - Alt
+    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES), // ! - ?
+    [TD_QUOTE_3DOTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_QUOT, BP_ELLP), // ' - …
 
-    [TD_PARENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN),
-    [TD_BRACK] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC),
-    [TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR),
-    [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_BSLS, BP_SLSH),
+    [TD_PARENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN), // ( - )
+    [TD_BRACK] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC), // [ - ]
+    [TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR), // { - }
+    [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_SLSH, BP_BSLS), // Slashs
 
-    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO),
-    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM),
-
-
-
-    [TD_ESC_CAPS] = ACTION_TAP_DANCE_TAP_HOLD(BP_CCED, BP_EACU),
-    [TD_FLO] = ACTION_TAP_DANCE_DOUBLE(BP_EURO, BP_AE),
+    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO), // $ - €
+    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM), // % - BUG
 
 
     // Specific tap dances to replace LT(layer, kc)
@@ -64,7 +60,19 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 
-// https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
+
+
+const uint16_t PROGMEM test_combo1[] = {BP_E, BP_T, COMBO_END};
+const uint16_t PROGMEM test_combo2[] = {LT(1, BP_COMM), LT(2, BP_DOT), COMBO_END};
+const uint16_t PROGMEM combo_fn[] = {TD(TDS_LT4_SCOLON), TD(TDS_LT3_COLON), COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(test_combo1, BP_W),
+    COMBO(test_combo2, BP_A),
+    COMBO(combo_fn, MO(5)),
+};
+
+
+
 
 
 
@@ -85,21 +93,21 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT_split_3x6_3(
+  [_BASE] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_TAB               ,     BP_Z       ,    BP_EACU     ,     BP_P       ,     BP_O       ,        BP_ECIR        ,                BP_AGRV        ,      BP_V      ,      BP_D      ,      BP_L      ,      BP_J      ,     TD(TD_BSPC_DEL)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
       GUI_T(KC_ESC)         ,     BP_A       ,     BP_U       ,     BP_I       ,     BP_E       ,   TD(TD_EXCLA_QUEST)  ,                 BP_C          ,      BP_T      ,      BP_S      ,      BP_R      ,      BP_N      ,     BP_M              ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      TD(TD_ALT_TREMA)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,   TD(TD_QUOTE_3DOTS)  ,                 BP_K          ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      , MT(MOD_RSFT, BP_DCIR) ,
+      TD(TD_TREMA_ALT)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,   TD(TD_QUOTE_3DOTS)  ,                 BP_K          ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      , MT(MOD_RSFT, BP_DCIR) ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                             TD(TDS_LT4_SCOLON),   LT(1, BP_COMM)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_DOT)   , TD(TDS_LT3_COLON)
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
-  [1] = LAYOUT_split_3x6_3(
+  [_LOWER] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             BP_UNDS         ,     XXXXXXX    ,     BP_GRV     ,     BP_QUOT    ,    BP_DQUO     ,        XXXXXXX        ,               XXXXXXX         ,    BP_HASH     ,TD(TD_CURRENCY) ,      BP_AT     ,     XXXXXXX    ,        _______        ,
@@ -109,12 +117,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,     XXXXXXX    ,     BP_LABK    ,    BP_RABK     ,  TD(TD_SLASHS) ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,     XXXXXXX    ,     XXXXXXX    ,     BP_CIRC    ,        _______        ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                               LT(4, BP_SCLN) ,   LT(1, BP_COMM)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_DOT)   ,   LT(5, BP_COLN)
+                                                                 XXXXXXX      ,      XXXXXXX      ,        XXXXXXX        ,           XXXXXXX         ,     XXXXXXX       ,     XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
-
-  [2] = LAYOUT_split_3x6_3(
+  [_RAISE] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      BP_7      ,      BP_8      ,      BP_9      ,     BP_PLUS    ,       BP_MINS         ,
@@ -124,11 +131,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,                BP_DOT         ,      BP_1      ,      BP_2      ,      BP_3      ,     BP_CIRC    ,    TD(TD_PERCENT)     ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,       BP_0
+                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      BP_0
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
-  [3] = LAYOUT_split_3x6_3(
+  [_ARROWS] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
@@ -142,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
-  [4] = LAYOUT_split_3x6_3(
+  [_MOUSE] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
@@ -155,8 +162,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                   XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
-};
 
+  [_FN] = LAYOUT_split_3x6_3(
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F7     ,      KC_F8     ,      KC_F9     ,     KC_F10     ,    KC_PRINT_SCREEN    ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F4     ,      KC_F5     ,      KC_F6     ,     KC_F11     ,   S(KC_PRINT_SCREEN)  ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F1     ,      KC_F2     ,      KC_F3     ,     KC_F12     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
+
+
+};
 
 
 
@@ -173,6 +195,42 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+
+
+bool oled_task_user(void) {
+    // Host Keyboard Layer Status
+    // oled_write_P(PSTR("Layer: "), false);
+    oled_write_P(PSTR(" ***  "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _BASE:
+            oled_write_P(PSTR("BASE"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("LOWER"), false);
+            break;
+        case _RAISE:
+            oled_write_P(PSTR("RAISE"), false);
+            break;
+        case _ARROWS:
+            oled_write_P(PSTR("ARROWS"), false);
+            break;
+        case _MOUSE:
+            oled_write_P(PSTR("MOUSE"), false);
+            break;
+        case _FN:
+            oled_write_P(PSTR("FN"), false);
+            break;
+
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Prout"), false);
+    }
+
+    oled_write_P(PSTR("  ***\n"), false);
+
+    return false;
+}
 
 
 
