@@ -22,12 +22,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "features/french.h"
 
 
-#include "features/tap_dance.c"
+#include "features/lt_semicolon.c"
 
 
         // SEND_STRING("aurnisetaurie");
         // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
 
+
+
+
+
+
+#include "features/tap_dance.c"
+
+
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL),
+    [TD_ALT_TREMA] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT),
+    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES),
+    [TD_QUOTE_3DOTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_QUOT, BP_ELLP),
+
+    [TD_PARENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN),
+    [TD_BRACK] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC),
+    [TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR),
+    [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_BSLS, BP_SLSH),
+
+    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO),
+    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM),
+
+
+
+    [TD_ESC_CAPS] = ACTION_TAP_DANCE_TAP_HOLD(BP_CCED, BP_EACU),
+    [TD_FLO] = ACTION_TAP_DANCE_DOUBLE(BP_EURO, BP_AE),
+
+
+    // Specific tap dances to replace LT(layer, kc)
+    [TDS_LT3_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt3_colon_finished, lt3_colon_reset),
+    [TDS_LT4_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt4_scolon_finished, lt4_scolon_reset)
+};
 
 
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
@@ -61,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       TD(TD_ALT_TREMA)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,   TD(TD_QUOTE_3DOTS)  ,                 BP_K          ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      , MT(MOD_RSFT, BP_DCIR) ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                               LT(4, BP_SCLN) ,   LT(1, BP_COMM)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_DOT)   ,   LT(5, BP_COLN)
+                                                            TD(TDS_LT4_SCOLON),   LT(1, BP_COMM)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_DOT)   , TD(TDS_LT3_COLON)
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
@@ -94,18 +128,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
-
   [3] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  )
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,   CTL_T(BP_D)  ,   CTL_T(BP_U)  ,    XXXXXXX     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
+
+  [4] = LAYOUT_split_3x6_3(
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
 };
 
 
@@ -116,10 +165,13 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case KC_TAB:
             return true;
+        case BP_AT:
+            return false;
         default:
             return false;
     }
 }
+
 
 
 

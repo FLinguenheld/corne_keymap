@@ -1,4 +1,4 @@
-// Tap Dance declarations
+// General enum for all tap dance
 enum {
     TD_BSPC_DEL,
     TD_ALT_TREMA, // The standard Mod-Tap doesn't work with "
@@ -15,9 +15,24 @@ enum {
 
 
     TD_ESC_CAPS,
-    QUOT_LAYR,
     TD_FLO,
+
+    // Specific tap dances to replace LT(layer, kc)
+    TDS_LT3_COLON,
+    TDS_LT4_SCOLON,
 };
+
+
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Simple tap-hold
+
+// How to :
+//      - Add an entry in the general enum
+//      - Add a case with it in the "process_record_user" function
+//      - Add it in the "qk_tap_dance_action_t" function with the two keys
+//      - Add in the layout TD(name)
+
 
 typedef struct {
     uint16_t tap;
@@ -29,7 +44,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     qk_tap_dance_action_t *action;
 
     switch (keycode) {
-        case TD(TD_BSPC_DEL):  // list all tap dance keycodes with tap-hold configurations
+        case TD(TD_BSPC_DEL):  // list here all tap dance keycodes with tap-hold configurations
         case TD(TD_FLO):
         case TD(TD_ALT_TREMA):
         case TD(TD_EXCLA_QUEST):
@@ -41,7 +56,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CURRENCY):
         case TD(TD_PERCENT):
 
-        
 
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
@@ -82,26 +96,152 @@ void tap_dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
 #define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
     { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
-
-// Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL),
-    [TD_ALT_TREMA] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT),
-    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES),
-    [TD_QUOTE_3DOTS] = ACTION_TAP_DANCE_TAP_HOLD(BP_QUOT, BP_ELLP),
-
-    [TD_PARENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_LPRN, BP_RPRN),
-    [TD_BRACK] = ACTION_TAP_DANCE_TAP_HOLD(BP_LBRC, BP_RBRC),
-    [TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(BP_LCBR, BP_RCBR),
-    [TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(BP_BSLS, BP_SLSH),
-
-    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO),
-    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM),
+// Simple tap-hold
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
 
 
 
-    [TD_ESC_CAPS] = ACTION_TAP_DANCE_TAP_HOLD(BP_CCED, BP_EACU),
-    [TD_FLO] = ACTION_TAP_DANCE_DOUBLE(BP_EURO, BP_AE),
-    
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Advanced tap-hold to replace the LT(c) function
 
+// Unfortunatelly, the LT(layer, kc) function is limited to basics keycodes
+// According to the doc, we have to use a tap dance
+// https://docs.qmk.fm/#/feature_layers
+
+
+// How to :
+//      - Add an entry in the general enum
+//      - Declare and create two functions :
+//                  *_finished()
+//                  *_reset()
+//      - Add it in the "qk_tap_dance_action_t" function with these new functions
+//      - Add in the layout TD(name)
+
+
+// --
+// Tap dance limited to tap and hold
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+} td_state_t;
+
+typedef struct {
+    bool is_press_action;
+    td_state_t state;
+} td_tap_t;
+
+
+// --
+// Declare the functions to be used with your tap dance key(s)
+
+// Function associated with all tap dances
+// td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+// Functions associated with individual tap dances
+// void lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data);
+// void lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data);
+
+// void lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data);
+// void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data);
+
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+
+// Determine the current tap dance state
+td_state_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return TD_SINGLE_TAP;
+        else return TD_SINGLE_HOLD;
+    }
+    else return TD_UNKNOWN;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t ql_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
 };
+
+
+// ------------------------------------------------------------
+// Layout 3 and colon - Specific functions
+
+void lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_SINGLE_TAP:
+            // Add here the key (and unregister it in the reset function)
+            register_code16(BP_COLN);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(3);
+            break;
+        default:
+            break;
+    }
+}
+
+void lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(3);
+    }
+    else {
+        // unregister the tapped key here
+        unregister_code16(BP_COLN);
+    }
+
+    ql_tap_state.state = TD_NONE;
+}
+
+// Layout 3 and colon
+// ------------------------------------------------------------
+
+// ------------------------------------------------------------
+// Layout 4 and semi colon - Specific functions
+
+void lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_SINGLE_TAP:
+            // Add here the key (and unregister it in the reset function)
+            register_code16(BP_SCLN);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(4);
+            break;
+        default:
+            break;
+    }
+}
+
+void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(4);
+    }
+    else {
+        // unregister the tapped key here
+        unregister_code16(BP_SCLN);
+    }
+
+    ql_tap_state.state = TD_NONE;
+}
+
+// Layout 4 and semi colon
+// ------------------------------------------------------------
+
+
+// Set a long-ish tapping term for tap-dance keys
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+            return 275;
+        default:
+            return TAPPING_TERM;
+    }
+}
