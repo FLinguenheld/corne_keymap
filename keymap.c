@@ -63,16 +63,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 const uint16_t PROGMEM test_combo1[] = {BP_E, BP_T, COMBO_END};
-const uint16_t PROGMEM test_combo2[] = {LT(1, BP_COMM), LT(2, BP_DOT), COMBO_END};
-const uint16_t PROGMEM combo_fn[] = {TD(TDS_LT4_SCOLON), TD(TDS_LT3_COLON), COMBO_END};
+const uint16_t PROGMEM test_combo2[] = {LT(_LOWER, BP_COMM), LT(_RAISE, BP_DOT), COMBO_END};
+// const uint16_t PROGMEM combo_fn[] = {TD(TDS_LT4_SCOLON), TD(TDS_LT3_COLON), COMBO_END};
+const uint16_t PROGMEM combo_fn[] = {LT(_RAISE, BP_DOT), BP_F, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(test_combo1, BP_W),
     COMBO(test_combo2, BP_A),
-    COMBO(combo_fn, MO(5)),
+    COMBO(combo_fn, OSL(_FN)),
 };
-
-
-
 
 
 
@@ -181,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-
+// --------------------------------------------------------------------------------
 // Auto shift
 bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
@@ -195,42 +193,67 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+// --------------------------------------------------------------------------------
+// OLED
 
+// Logo position in the glcdfont_flo.c file
+static void render_logo(void) {
+    static const char PROGMEM qmk_logo[] = {
+        0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, 0x90, 0x91, 0x92, 0x93, 0x94,
+        0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, 0xB0, 0xB1, 0xB2, 0xB3, 0xB4,
+        0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00
+    };
 
-bool oled_task_user(void) {
-    // Host Keyboard Layer Status
-    // oled_write_P(PSTR("Layer: "), false);
-    oled_write_P(PSTR(" ***  "), false);
-
-    switch (get_highest_layer(layer_state)) {
-        case _BASE:
-            oled_write_P(PSTR("BASE"), false);
-            break;
-        case _LOWER:
-            oled_write_P(PSTR("LOWER"), false);
-            break;
-        case _RAISE:
-            oled_write_P(PSTR("RAISE"), false);
-            break;
-        case _ARROWS:
-            oled_write_P(PSTR("ARROWS"), false);
-            break;
-        case _MOUSE:
-            oled_write_P(PSTR("MOUSE"), false);
-            break;
-        case _FN:
-            oled_write_P(PSTR("FN"), false);
-            break;
-
-        default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("Prout"), false);
-    }
-
-    oled_write_P(PSTR("  ***\n"), false);
-
-    return false;
+    oled_write_P(qmk_logo, false);
 }
 
+// Return the logo for the right part (if it's the master)
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
+#ifdef MASTER_RIGHT
+    if (!is_keyboard_master()) {
+        return OLED_ROTATION_0;
+    }
+    else {
+        return OLED_ROTATION_180;
+    }
+#endif
 
+    return rotation;
+}
+
+// Display the layout on the master and the logo on the slave
+bool oled_task_user(void) {
+
+    if (is_keyboard_master()) {
+
+        oled_clear();
+        switch (get_highest_layer(layer_state)) {
+            case _BASE:
+                oled_write_P(PSTR("\n   * BASE *"), false);
+                break;
+            case _LOWER:
+                oled_write_P(PSTR("\n   ** LOWER **"), false);
+                break;
+            case _RAISE:
+                oled_write_P(PSTR("\n   ** RAISE **"), false);
+                break;
+            case _ARROWS:
+                oled_write_P(PSTR("\n   *** ARROWS ***"), false);
+                break;
+            case _MOUSE:
+                oled_write_P(PSTR("\n   *** MOUSE ***"), false);
+                break;
+            case _FN:
+                oled_write_P(PSTR("\n   **** FN (OSL) ****"), false);
+                break;
+
+            default:
+                oled_write_P(PSTR("Prout"), false);
+        }
+
+    } else {
+        render_logo();  // Renders a static logo
+    }
+    return false;
+}

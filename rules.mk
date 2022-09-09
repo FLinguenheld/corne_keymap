@@ -1,8 +1,11 @@
-MOUSEKEY_ENABLE = yes    # Mouse keys
-# RGBLIGHT_ENABLE = yes    # Enable WS2812 RGB underlight.
+# Recommended by the doc to improve the compilation :
+LTO_ENABLE      = yes
+SPLIT_KEYBOARD = yes
+
+MOUSEKEY_ENABLE = yes
 OLED_ENABLE     = yes
 OLED_DRIVER     = SSD1306
-LTO_ENABLE      = yes
+
 
 AUTO_SHIFT_ENABLE = yes
 NO_AUTO_SHIFT_SPECIAL = no
@@ -11,9 +14,5 @@ UNICODEMAP_ENABLE = yes
 
 TAP_DANCE_ENABLE = yes
 COMBO_ENABLE = yes
-
-
-
-
 
 SEND_STRING_ENABLE = yes

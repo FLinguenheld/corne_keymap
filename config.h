@@ -23,14 +23,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
-
-#define MASTER_LEFT
-// #define MASTER_RIGHT
-// #define EE_HANDS
+// #define MASTER_LEFT
+#define MASTER_RIGHT
 
 
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
-#define OLED_BRIGHTNESS 128
+// OLED
+#define SPLIT_OLED_ENABLE // Sync both oled (on/off status only)
+#define OLED_BRIGHTNESS 100 // Protect my eyesss
+// #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+#define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_flo.c"
 
 // Auto shift
 #define AUTO_SHIFT_TIMEOUT 122
@@ -39,8 +40,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define UNICODE_SELECTED_MODES UC_LNX
 
+// Tap dance
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 122
+#define TAPPING_TERM 122 // Same as auto shift
 #define IGNORE_MOD_TAP_INTERRUPT
 
+// Combo
 #define COMBO_COUNT 3
