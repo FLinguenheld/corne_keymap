@@ -9,17 +9,25 @@ enum {
     TD_BRACK,
     TD_CURLY_B,
     TD_SLASHS,
+    
 
     TD_CURRENCY,
     TD_PERCENT,
 
 
-    TD_ESC_CAPS,
-    TD_FLO,
-
     // Specific tap dances to replace LT(layer, kc)
     TDS_LT3_COLON,
     TDS_LT4_SCOLON,
+
+
+    // US --
+    US_TD_PARENT,
+    US_TD_BRACK,
+    US_TD_CURLY_B,
+    US_TD_SLASHS,
+
+    US_TDS_LT3_COLON,
+    US_TDS_LT4_SCOLON,
 };
 
 
@@ -45,7 +53,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
         case TD(TD_BSPC_DEL):  // list here all tap dance keycodes with tap-hold configurations
-        case TD(TD_FLO):
         case TD(TD_TREMA_ALT):
         case TD(TD_EXCLA_QUEST):
         case TD(TD_QUOTE_3DOTS):
@@ -56,6 +63,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CURRENCY):
         case TD(TD_PERCENT):
 
+        // US
+        case TD(US_TD_PARENT):
+        case TD(US_TD_BRACK):
+        case TD(US_TD_CURLY_B):
+        case TD(US_TD_SLASHS):
 
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
@@ -234,6 +246,84 @@ void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 // Layout 4 and semi colon
 // ------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------
+// USA --
+// Layout 9 and colon - Specific functions
+
+void us_lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_SINGLE_TAP:
+            // Add here the key (and unregister it in the reset function)
+            register_code16(S(KC_SEMICOLON));
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(9);
+            break;
+        default:
+            break;
+    }
+}
+
+void us_lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(9);
+    }
+    else {
+        // unregister the tapped key here
+        unregister_code16(S(KC_SEMICOLON));
+    }
+
+    ql_tap_state.state = TD_NONE;
+}
+
+// USA --
+// Layout 9 and colon
+// ------------------------------------------------------------
+
+// ------------------------------------------------------------
+// USA --
+// Layout 10 and semi colon - Specific functions
+
+void us_lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_SINGLE_TAP:
+            // Add here the key (and unregister it in the reset function)
+            register_code16(KC_SEMICOLON);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(10);
+            break;
+        default:
+            break;
+    }
+}
+
+void us_lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(10);
+    }
+    else {
+        // unregister the tapped key here
+        unregister_code16(KC_SEMICOLON);
+    }
+
+    ql_tap_state.state = TD_NONE;
+}
+
+// USA --
+// Layout 10 and semi colon
+// ------------------------------------------------------------
+
+
+
+
 
 
 // Set a long-ish tapping term for tap-dance keys
