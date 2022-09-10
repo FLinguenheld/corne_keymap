@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <keymap_bepo.h>
 
-#include "features/french.h"
 #include "features/tap_dance.c"
 
 
@@ -78,6 +77,10 @@ combo_t key_combos[COMBO_COUNT] = {
 
 
 
+
+
+
+
   /* [1] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
@@ -98,11 +101,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-       KC_TAB               ,     BP_Z       ,    BP_EACU     ,     BP_P       ,     BP_O       ,        BP_ECIR        ,                BP_AGRV        ,      BP_V      ,      BP_D      ,      BP_L      ,      BP_J      ,     TD(TD_BSPC_DEL)   ,
+       KC_TAB               ,     BP_Z       ,    BP_EACU     ,     BP_P       ,     BP_O       ,     TD(TD_QUOTE_3DOTS)           ,                 BP_K          ,      BP_V      ,      BP_D      ,      BP_L      ,      BP_J      ,     TD(TD_BSPC_DEL)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
       GUI_T(KC_ESC)         ,     BP_A       ,     BP_U       ,     BP_I       ,     BP_E       ,   TD(TD_EXCLA_QUEST)  ,                 BP_C          ,      BP_T      ,      BP_S      ,      BP_R      ,      BP_N      ,     BP_M              ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      TD(TD_TREMA_ALT)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,   TD(TD_QUOTE_3DOTS)  ,                 BP_K          ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      , MT(MOD_RSFT, BP_DCIR) ,
+      TD(TD_TREMA_ALT)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,     BP_ECIR,                BP_AGRV        ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      , MT(MOD_RSFT, BP_DCIR) ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                             TD(TDS_LT4_SCOLON),   LT(1, BP_COMM)  ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,   LT(2, BP_DOT)   , TD(TDS_LT3_COLON)
@@ -230,21 +233,97 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-// --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Auto shift
-bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
+
+// Only for letters and on basis layers
+// Exceptions like Tab underneath
+
+bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
+
+    if (IS_LAYER_ON(_BASE)) {
+
+        switch (keycode) {
+            case BP_A:
+            case BP_B:
+            case BP_C:
+            case BP_D:
+            case BP_E:
+            case BP_F:
+            case BP_G:
+            case BP_H:
+            case BP_I:
+            case BP_J:
+            case BP_K:
+            case BP_L:
+            case BP_M:
+            case BP_N:
+            case BP_O:
+            case BP_P:
+            case BP_Q:
+            case BP_R:
+            case BP_S:
+            case BP_T:
+            case BP_U:
+            case BP_V:
+            case BP_W:
+            case BP_X:
+            case BP_Y:
+            case BP_Z:
+
+            case BP_EACU: // É
+            case BP_CCED: // Ç
+            case BP_ECIR: // Ê
+            case BP_AGRV: // À
+
+                return true;
+        }
+    }
+    else if (IS_LAYER_ON(_US_BASE)) {
+        
+        switch (keycode) {
+            case KC_A:
+            case KC_B:
+            case KC_C:
+            case KC_D:
+            case KC_E:
+            case KC_F:
+            case KC_G:
+            case KC_H:
+            case KC_I:
+            case KC_J:
+            case KC_K:
+            case KC_L:
+            case KC_M:
+            case KC_N:
+            case KC_O:
+            case KC_P:
+            case KC_Q:
+            case KC_R:
+            case KC_S:
+            case KC_T:
+            case KC_U:
+            case KC_V:
+            case KC_W:
+            case KC_X:
+            case KC_Y:
+            case KC_Z:
+
+                return true;
+        }
+    }
+
+    switch (keycode) {
         case KC_TAB:
             return true;
-        case BP_AT:
-            return false;
-        default:
-            return false;
     }
+    
+    return get_custom_auto_shifted_key(keycode, record);
 }
 
-
-// --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
 // OLED
 
 // Logo position in the glcdfont_flo.c file

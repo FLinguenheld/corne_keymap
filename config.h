@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Auto shift
 #define AUTO_SHIFT_TIMEOUT 122
+
 // #define NO_AUTO_SHIFT_SPECIAL // Problems with bépo
 // #define NO_AUTO_SHIFT_NUMERIC
 
