@@ -16,8 +16,8 @@ enum {
 
 
     // Specific tap dances to replace LT(layer, kc)
-    TDS_LT3_COLON,
-    TDS_LT4_SCOLON,
+    TDS_ARROWS_COLON,
+    TDS_ARROWS_SCOLON,
 
 
     // US --
@@ -26,8 +26,8 @@ enum {
     US_TD_CURLY_B,
     US_TD_SLASHS,
 
-    US_TDS_LT3_COLON,
-    US_TDS_LT4_SCOLON,
+    US_TDS_ARROWS_COLON,
+    US_TDS_ARROWS_SCOLON,
 };
 
 
@@ -154,11 +154,11 @@ typedef struct {
 // td_state_t cur_dance(qk_tap_dance_state_t *state);
 
 // Functions associated with individual tap dances
-// void lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data);
-// void lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data);
+// void lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data);
+// void lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data);
 
-// void lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data);
-// void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data);
+// void lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data);
+// void lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data);
 
 // ------------------------------------------------------------
 // ------------------------------------------------------------
@@ -182,7 +182,7 @@ static td_tap_t ql_tap_state = {
 // ------------------------------------------------------------
 // Layout 3 and colon - Specific functions
 
-void lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
+void lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
         case TD_SINGLE_TAP:
@@ -190,17 +190,17 @@ void lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_code16(BP_COLN);
             break;
         case TD_SINGLE_HOLD:
-            layer_on(3);
+            layer_on(_ARROWS);
             break;
         default:
             break;
     }
 }
 
-void lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
+void lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(3);
+        layer_off(_ARROWS);
     }
     else {
         // unregister the tapped key here
@@ -216,7 +216,7 @@ void lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
 // ------------------------------------------------------------
 // Layout 4 and semi colon - Specific functions
 
-void lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
+void lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
         case TD_SINGLE_TAP:
@@ -224,17 +224,17 @@ void lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_code16(BP_SCLN);
             break;
         case TD_SINGLE_HOLD:
-            layer_on(4);
+            layer_on(_ARROWS);
             break;
         default:
             break;
     }
 }
 
-void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
+void lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(4);
+        layer_off(_ARROWS);
     }
     else {
         // unregister the tapped key here
@@ -253,7 +253,7 @@ void lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
 // USA --
 // Layout 9 and colon - Specific functions
 
-void us_lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
+void us_lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
         case TD_SINGLE_TAP:
@@ -261,17 +261,17 @@ void us_lt3_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_code16(S(KC_SEMICOLON));
             break;
         case TD_SINGLE_HOLD:
-            layer_on(9);
+            layer_on(_US_ARROWS);
             break;
         default:
             break;
     }
 }
 
-void us_lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
+void us_lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(9);
+        layer_off(_US_ARROWS);
     }
     else {
         // unregister the tapped key here
@@ -289,7 +289,7 @@ void us_lt3_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
 // USA --
 // Layout 10 and semi colon - Specific functions
 
-void us_lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
+void us_lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
         case TD_SINGLE_TAP:
@@ -297,17 +297,17 @@ void us_lt4_scolon_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_code16(KC_SEMICOLON);
             break;
         case TD_SINGLE_HOLD:
-            layer_on(10);
+            layer_on(_US_ARROWS);
             break;
         default:
             break;
     }
 }
 
-void us_lt4_scolon_reset(qk_tap_dance_state_t *state, void *user_data) {
+void us_lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_SINGLE_HOLD) {
-        layer_off(10);
+        layer_off(_US_ARROWS);
     }
     else {
         // unregister the tapped key here

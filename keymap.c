@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <keymap_bepo.h>
 
-#include "features/tap_dance.c"
 
 
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
@@ -36,21 +35,19 @@ enum layers {
     _LOWER, 
     _RAISE, 
     _ARROWS,
-    _MOUSE,
     _FN,
 
     // US --
     _US_BASE,
     _US_LOWER,
     _US_RAISE,
-
     _US_ARROWS,
-    _US_MOUSE,
+    _US_FN,
 };
-
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Tap dance definitions --------------------------------------------------------------------------------------------------------------------------------
+#include "features/tap_dance.c" // Here to use layers
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL), // Backspace - Del
@@ -67,8 +64,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM), // % - BUG
 
     // Specific tap dances to replace LT(layer, kc)
-    [TDS_LT3_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt3_colon_finished, lt3_colon_reset),
-    [TDS_LT4_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt4_scolon_finished, lt4_scolon_reset),
+    [TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_colon_finished, lt_arrows_colon_reset),
+    [TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_semicolon_finished, lt_arrows_semicolon_reset),
 
 
     // US --
@@ -77,32 +74,43 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [US_TD_CURLY_B] = ACTION_TAP_DANCE_TAP_HOLD(S(KC_LEFT_BRACKET), S(KC_RIGHT_BRACKET)), // { - }
     [US_TD_SLASHS] = ACTION_TAP_DANCE_TAP_HOLD(KC_SLASH, KC_BACKSLASH), // Slashs
 
-    [US_TDS_LT3_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt3_colon_finished, us_lt3_colon_reset),
-    [US_TDS_LT4_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt4_scolon_finished, us_lt4_scolon_reset),
-
+    [US_TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_colon_finished, us_lt_arrows_colon_reset),
+    [US_TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_semicolon_finished, us_lt_arrows_semicolon_reset),
 };
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Combos -----------------------------------------------------------------------------------------------------------------------------------------------
 
-const uint16_t PROGMEM go_to_bepo[] = {KC_TAB, TD(TD_BSPC_DEL), LCTL_T(KC_SPC), COMBO_END};
-const uint16_t PROGMEM go_to_usa[] = {KC_TAB, TD(TD_BSPC_DEL), COMBO_END};
-// const uint16_t PROGMEM combo_fn[] = {TD(TDS_LT4_SCOLON), TD(TDS_LT3_COLON), COMBO_END};
-const uint16_t PROGMEM combo_fn[] = {LT(_RAISE, BP_DOT), BP_F, COMBO_END};
+const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, TD(TD_BSPC_DEL), LCTL_T(KC_SPC), COMBO_END};
+const uint16_t PROGMEM combo_fn[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
 
+const uint16_t PROGMEM combo_e_dans_l_a[] = {BP_EACU, BP_A, COMBO_END};
+const uint16_t PROGMEM combo_e_dans_l_o[] = {BP_EACU, BP_O, COMBO_END};
+
+const uint16_t PROGMEM combo_e_accent[] = {BP_EACU, BP_E, COMBO_END};
+const uint16_t PROGMEM combo_a_accent[] = {BP_E, BP_A, COMBO_END};
+const uint16_t PROGMEM combo_u_accent[] = {BP_E, BP_U, COMBO_END};
+const uint16_t PROGMEM combo_c_cedille[] = {BP_E, BP_C, COMBO_END};
 
 // TEST
-// const uint16_t PROGMEM return_base[] = {TD(TDS_LT4_SCOLON), TD(TDS_LT3_COLON), COMBO_END};
+// const uint16_t PROGMEM return_base[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
 
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(go_to_bepo, TG(_BASE)),
-    COMBO(go_to_usa, TG(_US_BASE)),
-    COMBO(combo_fn, OSL(_FN)),
-    // COMBO(return_base, TG(_BASE)),
-};
+    COMBO(switch_bepo_usa, TG(_BASE)),
+    COMBO(combo_fn, MO(_FN)),
 
+    COMBO(combo_e_dans_l_a, BP_AE),
+    COMBO(combo_e_dans_l_o, BP_OE),
+
+    COMBO(combo_e_accent, BP_EGRV),
+    COMBO(combo_a_accent, BP_AGRV),
+    COMBO(combo_u_accent, BP_UGRV),
+    COMBO(combo_c_cedille, BP_CCED),
+
+
+};
 
 
   /* [1] = LAYOUT_split_3x6_3(
@@ -132,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       TD(TD_TREMA_ALT)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,       BP_EGRV         ,                BP_AGRV        ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      ,     SFT_T(BP_DCIR)    ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                |----------------------+----------------------+-----------------------|   |-----------------------+----------------------+----------------------|
-                                                        TD(TDS_LT4_SCOLON) ,  LT(_LOWER, BP_COMM) ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,  LT(_RAISE, BP_DOT)  ,  TD(TDS_LT3_COLON)
+                                                        TD(TDS_ARROWS_SCOLON) ,  LT(_LOWER, BP_COMM) ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,  LT(_RAISE, BP_DOT)  ,  TD(TDS_ARROWS_COLON)
   //                                                |----------------------+----------------------+-----------------------|   |-----------------------+----------------------+----------------------|
   ),
 
@@ -167,25 +175,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ARROWS] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
+            _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
+            _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(BP_D)     ,    C(BP_U)     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
-  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-  ),
-
-  [_MOUSE] = LAYOUT_split_3x6_3(
-
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
+            _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(BP_D)     ,    C(BP_U)     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                                   XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
@@ -220,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_LALT              ,     KC_B       ,     KC_Y       ,     KC_X       ,     KC_W       ,       XXXXXXX         ,                XXXXXXX        ,      KC_Q      ,      KC_G      ,      KC_H      ,      KC_F      ,      SFT_T(S(KC_6))   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                |----------------------+----------------------+-----------------------|   |-----------------------+----------------------+----------------------|
-                                                            TD(US_TDS_LT4_SCOLON)   ,LT(_US_LOWER, KC_COMMA),    LCTL_T(KC_SPC)     ,        KC_ENT             , LT(_US_RAISE, KC_DOT), TD(US_TDS_LT3_COLON)
+                                                            TD(US_TDS_ARROWS_SCOLON)   ,LT(_US_LOWER, KC_COMMA),    LCTL_T(KC_SPC)     ,        KC_ENT             , LT(_US_RAISE, KC_DOT), TD(US_TDS_ARROWS_COLON)
   //                                                |----------------------+----------------------+-----------------------|   |-----------------------+----------------------+----------------------|
   ),
 
@@ -255,31 +249,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_US_ARROWS] = LAYOUT_split_3x6_3(
 
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
+            _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    KC_HOME     ,  KC_PAGE_DOWN  ,   KC_PAGE_UP   ,     KC_END     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
+            _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(KC_D)     ,    C(KC_U)     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
-  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-  ),
-
-  [_US_MOUSE] = LAYOUT_split_3x6_3(
-
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,  KC_MS_WH_LEFT ,   KC_MS_WH_UP  ,  KC_MS_WH_DOWN , KC_MS_WH_RIGHT ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
-  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
+            _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(KC_D)     ,    C(KC_U)     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                                   XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
+  [_US_FN] = LAYOUT_split_3x6_3(
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F7     ,      KC_F8     ,      KC_F9     ,     KC_F10     ,    KC_PRINT_SCREEN    ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F4     ,      KC_F5     ,      KC_F6     ,     KC_F11     ,   S(KC_PRINT_SCREEN)  ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,      KC_F1     ,      KC_F2     ,      KC_F3     ,     KC_F12     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
 };
 
 
@@ -378,6 +371,7 @@ bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 }
 
 
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Logo position in the glcdfont_flo.c file -------------------------------------------------------------------------------------------------------------
 
@@ -414,19 +408,16 @@ bool oled_task_user(void) {
         oled_clear();
         switch (get_highest_layer(layer_state)) {
             case _BASE:
-                oled_write_P(PSTR("\n   * BASE *"), false);
+                oled_write_P(PSTR("\n       * BASE *"), false);
                 break;
             case _LOWER:
-                oled_write_P(PSTR("\n   ** LOWER **"), false);
+                oled_write_P(PSTR("\n     ** LOWER **"), false);
                 break;
             case _RAISE:
-                oled_write_P(PSTR("\n   ** RAISE **"), false);
+                oled_write_P(PSTR("\n     ** RAISE **"), false);
                 break;
             case _ARROWS:
-                oled_write_P(PSTR("\n   *** ARROWS ***"), false);
-                break;
-            case _MOUSE:
-                oled_write_P(PSTR("\n   *** MOUSE ***"), false);
+                oled_write_P(PSTR("\n    *** ARROWS ***"), false);
                 break;
             case _FN:
                 oled_write_P(PSTR("\n   **** FN (OSL) ****"), false);
@@ -434,20 +425,21 @@ bool oled_task_user(void) {
 
             // US --
             case _US_BASE:
-                oled_write_P(PSTR("\n   $$$ USA $$$\n   $ BASE $"), false);
+                oled_write_P(PSTR("     $$$ USA $$$\n\n      $ BASE $"), false);
                 break;
             case _US_LOWER:
-                oled_write_P(PSTR("\n   $$$ USA $$$\n   $$ LOWER $$"), false);
+                oled_write_P(PSTR("     $$$ USA $$$\n\n     $$ LOWER $$"), false);
                 break;
             case _US_RAISE:
-                oled_write_P(PSTR("\n   $$$ USA $$$\n   $$ RAISE $$"), false);
+                oled_write_P(PSTR("     $$$ USA $$$\n\n     $$ RAISE $$"), false);
                 break;
             case _US_ARROWS:
-                oled_write_P(PSTR("\n   $$$ USA $$$\n   $$ ARROWS $$"), false);
+                oled_write_P(PSTR("     $$$ USA $$$\n\n    $$$ ARROWS $$$"), false);
                 break;
-            case _US_MOUSE:
-                oled_write_P(PSTR("\n   $$$ USA $$$\n   $$ MOUSE $$"), false);
+            case _US_FN:
+                oled_write_P(PSTR("     $$$ USA $$$\n\n   $$$$ FN (OSL) $$$$"), false);
                 break;
+
             default:
                 oled_write_P(PSTR("Prout"), false);
         }
