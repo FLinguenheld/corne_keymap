@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 
 // OLED
@@ -47,4 +47,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IGNORE_MOD_TAP_INTERRUPT
 
 // Combo
-#define COMBO_COUNT 8
+#define COMBO_COUNT 9

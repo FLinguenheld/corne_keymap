@@ -3,28 +3,16 @@ enum {
     TD_BSPC_DEL,
     TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
     TD_EXCLA_QUEST,
-    TD_QUOTE_3DOTS,
-
-    TD_PARENT,
-    TD_BRACK,
-    TD_CURLY_B,
-    TD_SLASHS,
-    
 
     TD_CURRENCY,
     TD_PERCENT,
-
 
     // Specific tap dances to replace LT(layer, kc)
     TDS_ARROWS_COLON,
     TDS_ARROWS_SCOLON,
 
-
     // US --
-    US_TD_PARENT,
-    US_TD_BRACK,
-    US_TD_CURLY_B,
-    US_TD_SLASHS,
+    US_TD_EXCLA_QUEST,
 
     US_TDS_ARROWS_COLON,
     US_TDS_ARROWS_SCOLON,
@@ -55,19 +43,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_BSPC_DEL):  // list here all tap dance keycodes with tap-hold configurations
         case TD(TD_TREMA_ALT):
         case TD(TD_EXCLA_QUEST):
-        case TD(TD_QUOTE_3DOTS):
-        case TD(TD_PARENT):
-        case TD(TD_BRACK):
-        case TD(TD_CURLY_B):
-        case TD(TD_SLASHS):
         case TD(TD_CURRENCY):
         case TD(TD_PERCENT):
 
         // US
-        case TD(US_TD_PARENT):
-        case TD(US_TD_BRACK):
-        case TD(US_TD_CURLY_B):
-        case TD(US_TD_SLASHS):
+        case TD(US_TD_EXCLA_QUEST):
+
 
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
@@ -121,7 +102,8 @@ void tap_dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Unfortunatelly, the LT(layer, kc) function is limited to basics keycodes
 // According to the doc, we have to use a tap dance
 // https://docs.qmk.fm/#/feature_layers
-
+// Moreover I can`t use two layout (one for arrows and another for mouse), That created a bug when I clicked on both TD simultaneously ;(
+// So I have grouped them in one layer : _ARROWS
 
 // How to :
 //      - Add an entry in the general enum
@@ -132,8 +114,9 @@ void tap_dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
 //      - Add in the layout TD(name)
 
 
-// --
-// Tap dance limited to tap and hold
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// Tap dance limited to tap and hold (double tap is horrible ^^)
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -145,23 +128,6 @@ typedef struct {
     bool is_press_action;
     td_state_t state;
 } td_tap_t;
-
-
-// --
-// Declare the functions to be used with your tap dance key(s)
-
-// Function associated with all tap dances
-// td_state_t cur_dance(qk_tap_dance_state_t *state);
-
-// Functions associated with individual tap dances
-// void lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data);
-// void lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data);
-
-// void lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data);
-// void lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data);
-
-// ------------------------------------------------------------
-// ------------------------------------------------------------
 
 // Determine the current tap dance state
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
@@ -180,7 +146,7 @@ static td_tap_t ql_tap_state = {
 
 
 // ------------------------------------------------------------
-// Layout 3 and colon - Specific functions
+// Layout _ARROWS and colon - Specific functions
 
 void lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
@@ -210,11 +176,11 @@ void lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = TD_NONE;
 }
 
-// Layout 3 and colon
+// Layout _ARROWS and colon
 // ------------------------------------------------------------
 
 // ------------------------------------------------------------
-// Layout 4 and semi colon - Specific functions
+// Layout _ARROWS and semi colon - Specific functions
 
 void lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
@@ -244,14 +210,14 @@ void lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = TD_NONE;
 }
 
-// Layout 4 and semi colon
+// Layout _ARROWS and semi colon
 // ------------------------------------------------------------
 
 
 
 // ------------------------------------------------------------
 // USA --
-// Layout 9 and colon - Specific functions
+// Layout _US_ARROWS and colon - Specific functions
 
 void us_lt_arrows_colon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
@@ -282,12 +248,12 @@ void us_lt_arrows_colon_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 // USA --
-// Layout 9 and colon
+// Layout _US_ARROWS and colon
 // ------------------------------------------------------------
 
 // ------------------------------------------------------------
 // USA --
-// Layout 10 and semi colon - Specific functions
+// Layout _US_ARROWS and semi colon - Specific functions
 
 void us_lt_arrows_semicolon_finished(qk_tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
@@ -318,11 +284,8 @@ void us_lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) 
 }
 
 // USA --
-// Layout 10 and semi colon
+// Layout _US_ARROWS and semi colon
 // ------------------------------------------------------------
-
-
-
 
 
 
