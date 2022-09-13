@@ -27,11 +27,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 
 
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
 // OLED
-#define SPLIT_OLED_ENABLE // Sync both oled (on/off status only)
-#define OLED_BRIGHTNESS 100 // Protect my eyesss
+#define SPLIT_LAYER_STATE_ENABLE
+
+// #define SPLIT_OLED_ENABLE // Sync both oled (on/off status only)
+#define OLED_BRIGHTNESS 90 // Protect my eyesss
+#define OLED_TIMEOUT 5000
 // #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
-#define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_flo.c"
+
+#ifdef MASTER_LEFT
+    #define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_left.c"
+#else
+    #define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_right.c"
+#endif
 
 // Auto shift
 #define AUTO_SHIFT_TIMEOUT 122
