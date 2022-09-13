@@ -11,7 +11,6 @@ https://docs.qmk.fm/#/
 #include <keymap_bepo.h>
 
 
-
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
         // SEND_STRING("aurnisetaurie");
         // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
@@ -394,30 +393,22 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 // Wonderful display !
 bool oled_task_user(void) {
 
-        oled_clear();
-    // if (is_keyboard_master()) {
+#ifdef MASTER_LEFT
+    oled_write_P(PSTR("\n"), false);
+#endif
+
+    // oled_clear() prevents the timeout, I used oled_write_ln to fill lines with spaces
+    bool us = false;
 
         switch (get_highest_layer(layer_state)) {
-            // case _US_BASE:
             case _US_LOWER:
             case _US_RAISE:
             case _US_ARROWS:
             case _US_FN:
-
-#ifdef MASTER_LEFT
-    oled_write_P(PSTR("\n"), false);
-#endif
-                oled_write_P(PSTR("    $$$$$ USA $$$$$"), false);
-
-#ifdef MASTER_RIGHT
-    oled_write_P(PSTR("\n"), false);
-#endif
+                us = true;
+                oled_write_ln_P(PSTR("    $$$$$ USA $$$$$"), false);
         }
 
-
-#ifdef MASTER_LEFT
-    oled_write_P(PSTR("\n"), false);
-#endif
 
         switch (get_highest_layer(layer_state)) {
             case _BASE:
@@ -430,24 +421,29 @@ bool oled_task_user(void) {
 
             case _LOWER:
             case _US_LOWER:
-                oled_write_P(PSTR("\n      -- LOWER --"), false);
+                oled_write_ln_P(PSTR("\n      -- LOWER --"), false);
                 break;
 
             case _RAISE:
             case _US_RAISE:
-                oled_write_P(PSTR("\n      -- RAISE --"), false);
+                oled_write_ln_P(PSTR("\n      -- RAISE --"), false);
                 break;
 
             case _ARROWS:
             case _US_ARROWS:
-                oled_write_P(PSTR("\n    --- ARROWS ---"), false);
+                oled_write_ln_P(PSTR("\n    --- ARROWS ---"), false);
                 break;
 
             case _FN:
             case _US_FN:
-                oled_write_P(PSTR("\n     ---- FN ----"), false);
+                oled_write_ln_P(PSTR("\n     ---- FN ----"), false);
                 break;
         }
+
+    // Add an empty line to clear the screen
+    if (!us){
+        oled_write_ln_P(PSTR(""), false);
+    }
 
     // oled_invert(true);
     return false;
