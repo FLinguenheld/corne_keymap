@@ -1,25 +1,3 @@
-// General enum for all tap dance
-enum {
-    TD_BSPC_DEL,
-    TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
-    TD_EXCLA_QUEST,
-
-    TD_CURRENCY,
-    TD_PERCENT,
-
-    // Specific tap dances to replace LT(layer, kc)
-    TDS_ARROWS_COLON,
-    TDS_ARROWS_SCOLON,
-
-    // US --
-    US_TD_EXCLA_QUEST,
-
-    US_TDS_ARROWS_COLON,
-    US_TDS_ARROWS_SCOLON,
-
-
-
-};
 
 
 // Macros

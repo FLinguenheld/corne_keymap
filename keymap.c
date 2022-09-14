@@ -11,10 +11,12 @@ https://docs.qmk.fm/#/
 #include <keymap_bepo.h>
 #include "sendstring_bepo.h"
 
+// LEADER_EXTERNS();
 
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
         // SEND_STRING("aurnisetaurie");
         // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
+
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -37,6 +39,37 @@ enum layers {
     _US_FN,
 };
 
+
+// General enum for tap dance and combos
+enum {
+    TD_BSPC_DEL,
+    TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
+    TD_EXCLA_QUEST,
+
+    TD_CURRENCY,
+    TD_PERCENT,
+
+    // Specific tap dances to replace LT(layer, kc)
+    TDS_ARROWS_COLON,
+    TDS_ARROWS_SCOLON,
+
+    // US --
+    US_TD_EXCLA_QUEST,
+
+    US_TDS_ARROWS_COLON,
+    US_TDS_ARROWS_SCOLON,
+
+
+    // Combos
+    CB_MAIL_SHORT,
+    CB_MAIL_LONG,
+
+    US_CB_MAIL_SHORT,
+    US_CB_MAIL_LONG,
+
+    CB_VIM_COLON,
+    CB_VIM_SCOLON,
+};
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Tap dance definitions --------------------------------------------------------------------------------------------------------------------------------
@@ -66,6 +99,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
+// Leader key -------------------------------------------------------------------------------------------------------------------------------------------
+// The leader key is fun but costs memory and needs a dedicated key (mod tap doesn't work for it :@)
+// It appears better to use combos to play with macros
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Combos -----------------------------------------------------------------------------------------------------------------------------------------------
 
 const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, TD(TD_BSPC_DEL), COMBO_END};
@@ -85,6 +124,18 @@ const uint16_t PROGMEM combo_u_accent[] = {BP_E, BP_U, COMBO_END};
 const uint16_t PROGMEM combo_c_cedille[] = {BP_E, BP_C, COMBO_END};
 
 
+// With macros !
+const uint16_t PROGMEM combo_mail_short[] = {BP_M, BP_S, COMBO_END};
+const uint16_t PROGMEM combo_mail_long[] = {BP_M, BP_L, COMBO_END};
+
+const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
+const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
+
+
+const uint16_t PROGMEM combo_vim_colon[] = {BP_M, TD(TDS_ARROWS_COLON), COMBO_END};
+const uint16_t PROGMEM combo_vim_scolon[] = {BP_M, TD(TDS_ARROWS_SCOLON), COMBO_END};
+
+
 combo_t key_combos[COMBO_COUNT] = {
 
     COMBO(switch_bepo_usa, TG(_US_BASE)),
@@ -101,9 +152,66 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_e_accent, BP_EGRV),
     COMBO(combo_a_accent, BP_AGRV),
     COMBO(combo_u_accent, BP_UGRV),
-    COMBO(combo_c_cedille, BP_CCED)
+    COMBO(combo_c_cedille, BP_CCED),
 
+
+    [CB_MAIL_SHORT] = COMBO_ACTION(combo_mail_short),
+    [CB_MAIL_LONG] = COMBO_ACTION(combo_mail_long),
+
+    [US_CB_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
+    [US_CB_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
+
+
+    [CB_VIM_COLON] = COMBO_ACTION(combo_vim_colon),
+    [CB_VIM_SCOLON] = COMBO_ACTION(combo_vim_scolon),
 };
+
+
+    // TD(TDS_ARROWS_SCOLON) ,  LT(_LOWER, BP_COMM) ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,  LT(_RAISE, BP_DOT)  ,  TD(TDS_ARROWS_COLON)
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+
+  switch(combo_index) {
+    case CB_MAIL_SHORT:
+    case US_CB_MAIL_SHORT:
+      if (pressed) {
+        SEND_STRING("f@linguenheld.fr");
+      }
+      break;
+
+    case CB_MAIL_LONG:
+    case US_CB_MAIL_LONG:
+      if (pressed) {
+        SEND_STRING("florent@linguenheld.fr");
+      }
+      break;
+
+    case CB_VIM_COLON:
+      if (pressed) {
+        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
+      }
+      break;
+
+    case CB_VIM_SCOLON:
+      if (pressed) {
+        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ";" SS_TAP(X_ESC));
+      }
+      break;
+
+    // case BSPC_LSFT_CLEAR:
+      // if (pressed) {
+        // tap_code16(KC_END);
+        // tap_code16(S(KC_HOME));
+        // tap_code16(KC_BSPC);
+      // }
+      // break;
+
+  }
+}
+
+
+
+
 
 
 
@@ -134,7 +242,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_TAB               ,     BP_Z       ,    BP_EACU     ,     BP_P       ,     BP_O       ,        BP_J           ,                 BP_K          ,      BP_V      ,      BP_D      ,      BP_L      ,      BP_M      ,     TD(TD_BSPC_DEL)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      GUI_T(KC_ESC)         ,     BP_A       ,     BP_U       ,     BP_I       ,     BP_E       ,   TD(TD_EXCLA_QUEST)  ,                 BP_C          ,      BP_T      ,      BP_S      ,      BP_R      ,      BP_N      ,     RCS_T(BP_ELLP)    ,
+      GUI_T(KC_ESC)         ,     BP_A       ,     BP_U       ,     BP_I       ,     BP_E       ,   TD(TD_EXCLA_QUEST)  ,                 BP_C          ,      BP_T      ,      BP_S      ,      BP_R      ,      BP_N      ,     RCS_T(BP_DOT)     ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
       TD(TD_TREMA_ALT)      ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,       BP_LABK         ,                BP_RABK        ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      ,     SFT_T(BP_DCIR)    ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
@@ -222,7 +330,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_TAB               ,     KC_Z       ,    XXXXXXX     ,     KC_P       ,     KC_O       ,        KC_J           ,                 KC_K          ,      KC_V      ,      KC_D      ,      KC_L      ,      KC_M      ,     TD(TD_BSPC_DEL)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      LGUI_T(KC_ESC)        ,     KC_A       ,     KC_U       ,     KC_I       ,     KC_E       ,  TD(US_TD_EXCLA_QUEST),                 KC_C          ,      KC_T      ,      KC_S      ,      KC_R      ,      KC_N      ,      RCS_T(KC_DOT)    ,
+      LGUI_T(KC_ESC)        ,     KC_A       ,     KC_U       ,     KC_I       ,     KC_E       ,  TD(US_TD_EXCLA_QUEST),                 KC_C          ,      KC_T      ,      KC_S      ,      KC_R      ,      KC_N      ,      KC_LEAD/* RCS_T(KC_LEAD) */   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_LALT              ,     KC_B       ,     KC_Y       ,     KC_X       ,     KC_W       ,     S(KC_COMMA)       ,               S(KC_DOT)       ,      KC_Q      ,      KC_G      ,      KC_H      ,      KC_F      ,      SFT_T(S(KC_6))   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
