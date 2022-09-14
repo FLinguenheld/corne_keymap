@@ -37,4 +37,7 @@ This is the c configuration file for the keymap
 #define IGNORE_MOD_TAP_INTERRUPT
 
 // Combo
-#define COMBO_COUNT 9
+#define COMBO_COUNT 11
+
+// Leader
+#define LEADER_TIMEOUT 300

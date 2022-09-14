@@ -16,8 +16,19 @@ enum {
 
     US_TDS_ARROWS_COLON,
     US_TDS_ARROWS_SCOLON,
+
+
+
 };
 
+
+// Macros
+enum custom_keycodes {
+    MAC_MAIL = SAFE_RANGE,
+    MAC_MAIL_SHORT,
+    MAC_VIM_COLON,
+    MAC_VIM_SCOLON,
+};
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
@@ -55,8 +66,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
                 tap_code16(tap_hold->tap);
             }
+
+            break;
+
+
+// --------------------------------------------------
+// --------------------------------------------------
+// Macros
+    case MAC_MAIL:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            SEND_STRING("florent@linguenheld.fr");
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+
+    case MAC_MAIL_SHORT:
+        if (record->event.pressed) {
+            // when keycode QMKURL is pressed
+            SEND_STRING("f@linguenheld.fr");
+        } else {
+            // when keycode QMKURL is released
+        }
+        break;
+
+    case MAC_VIM_COLON:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
+        }
+        break;
+
+    case MAC_VIM_SCOLON:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ";" SS_TAP(X_ESC));
+        }
+        break;
+
     }
     return true;
+
+
 }
 
 void tap_dance_tap_hold_finished(qk_tap_dance_state_t *state, void *user_data) {

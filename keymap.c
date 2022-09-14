@@ -9,6 +9,7 @@ https://docs.qmk.fm/#/
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include <keymap_bepo.h>
+#include "sendstring_bepo.h"
 
 
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
@@ -24,6 +25,7 @@ enum layers {
     _LOWER, 
     _RAISE, 
     _ARROWS,
+    _ADJUST,
     _FN,
 
     // US --
@@ -31,8 +33,10 @@ enum layers {
     _US_LOWER,
     _US_RAISE,
     _US_ARROWS,
+    _US_ADJUST,
     _US_FN,
 };
+
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Tap dance definitions --------------------------------------------------------------------------------------------------------------------------------
@@ -56,6 +60,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
     [US_TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_colon_finished, us_lt_arrows_colon_reset),
     [US_TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_semicolon_finished, us_lt_arrows_semicolon_reset),
+
+
 };
 
 
@@ -63,6 +69,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // Combos -----------------------------------------------------------------------------------------------------------------------------------------------
 
 const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, TD(TD_BSPC_DEL), COMBO_END};
+
+const uint16_t PROGMEM combo_adjust[] = {LT(_LOWER, BP_COMM), LT(_RAISE, BP_DOT), COMBO_END};
+const uint16_t PROGMEM us_combo_adjust[] = {LT(_US_LOWER, KC_COMMA), LT(_US_RAISE, KC_DOT), COMBO_END};
 
 const uint16_t PROGMEM combo_fn[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
 const uint16_t PROGMEM us_combo_fn[] = {TD(US_TDS_ARROWS_SCOLON), TD(US_TDS_ARROWS_COLON), COMBO_END};
@@ -80,6 +89,9 @@ combo_t key_combos[COMBO_COUNT] = {
 
     COMBO(switch_bepo_usa, TG(_US_BASE)),
 
+    COMBO(combo_adjust, MO(_ADJUST)),
+    COMBO(us_combo_adjust, MO(_US_ADJUST)),
+
     COMBO(combo_fn, MO(_FN)),
     COMBO(us_combo_fn, MO(_US_FN)),
 
@@ -92,6 +104,9 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_c_cedille, BP_CCED)
 
 };
+
+
+
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -166,7 +181,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(BP_D)     ,    C(BP_U)     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+                                                                  XXXXXXX     ,       XXXXXXX     ,     LCTL_T(KC_SPC)    ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
+
+  [_ADJUST] = LAYOUT_split_3x6_3(
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     , KC_AUDIO_MUTE  , KC_AUDIO_VOL_UP,   KC_AUDIO_VOL_DOWN   ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    MAC_MAIL    ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     , XXXXXXX ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                              MAC_VIM_SCOLON  ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,   MAC_VIM_COLON
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
@@ -238,6 +267,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,   KC_MS_LEFT   ,    KC_MS_UP    ,   KC_MS_DOWN   ,   KC_MS_RIGHT  ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,   KC_MS_BTN1   ,     XXXXXXX    ,   KC_MS_BTN3   ,   KC_MS_BTN2   ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(KC_D)     ,    C(KC_U)     ,    XXXXXXX     ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+                                                                  XXXXXXX     ,       XXXXXXX     ,    LCTL_T(KC_SPC)     ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+  //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
+  ),
+
+  [_US_ADJUST] = LAYOUT_split_3x6_3(
+
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     , KC_AUDIO_MUTE  , KC_AUDIO_VOL_UP,   KC_AUDIO_VOL_DOWN   ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX    ,       _______         ,
+  //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                                   XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
@@ -404,6 +447,7 @@ bool oled_task_user(void) {
             case _US_LOWER:
             case _US_RAISE:
             case _US_ARROWS:
+            case _US_ADJUST:
             case _US_FN:
                 us = true;
                 oled_write_ln_P(PSTR("    $$$$$ USA $$$$$"), false);
@@ -434,9 +478,14 @@ bool oled_task_user(void) {
                 oled_write_ln_P(PSTR("\n    --- ARROWS ---"), false);
                 break;
 
+            case _ADJUST:
+            case _US_ADJUST:
+                oled_write_ln_P(PSTR("\n   ~~~~ ADJUST ~~~~"), false);
+                break;
+
             case _FN:
             case _US_FN:
-                oled_write_ln_P(PSTR("\n     ---- FN ----"), false);
+                oled_write_ln_P(PSTR("\n    ~~~~~ FN ~~~~~"), false);
                 break;
         }
 
