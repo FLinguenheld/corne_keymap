@@ -29,10 +29,6 @@ enum combos {
     CB_MAIL_LONG,
 
 
-
-    CB_VIM_COLON,
-    CB_VIM_SCOLON,
-
     // US
     US_CB_LAYER_ADJUST,
     US_CB_LAYER_FN,
@@ -74,9 +70,6 @@ const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
 const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
 
 
-const uint16_t PROGMEM combo_vim_colon[] = {BP_M, TD(TDS_ARROWS_COLON), COMBO_END};
-const uint16_t PROGMEM combo_vim_scolon[] = {BP_M, TD(TDS_ARROWS_SCOLON), COMBO_END};
-
 
 // --------------------------------------------------
 // --------------------------------------------------
@@ -105,20 +98,24 @@ combo_t key_combos[] = {
 
     [US_CB_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
     [US_CB_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
-
-
-    [CB_VIM_COLON] = COMBO_ACTION(combo_vim_colon),
-    [CB_VIM_SCOLON] = COMBO_ACTION(combo_vim_scolon),
 };
 
 
 // --------------------------------------------------
 // --------------------------------------------------
 // Macros !
+// Impossible to use the 'sendstring_bepo.h' because of the conversion to us.
+// So bepo versions have to be converted from us (see the keymap_bepo.h file to match characters)
 void process_combo_event(uint16_t combo_index, bool pressed) {
 
   switch(combo_index) {
+        // Apparently, it works with us and bepo :o
     case CB_MAIL_SHORT:
+      if (pressed) {
+        SEND_STRING("/6od;.sf;,foiv/l");
+      }
+      break;
+
     case US_CB_MAIL_SHORT:
       if (pressed) {
         SEND_STRING("f@linguenheld.fr");
@@ -126,23 +123,22 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
 
     case CB_MAIL_LONG:
+      if (pressed) {
+        SEND_STRING("/orlf;j6od;,sf;.foiv/l");
+      }
+      break;
+
     case US_CB_MAIL_LONG:
       if (pressed) {
         SEND_STRING("florent@linguenheld.fr");
       }
       break;
 
-    case CB_VIM_COLON:
-      if (pressed) {
-        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
-      }
-      break;
-
-    case CB_VIM_SCOLON:
-      if (pressed) {
-        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ";" SS_TAP(X_ESC));
-      }
-      break;
+    // case CB_VIM_COLON:
+      // if (pressed) {
+        // SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
+      // }
+      // break;
 
     // case BSPC_LSFT_CLEAR:
       // if (pressed) {

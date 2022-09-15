@@ -1,4 +1,4 @@
-# Recommended by the doc to improve the compilation :
+# Recommended by the doc to improve compilation :
 LTO_ENABLE      = yes
 # SPLIT_KEYBOARD = yes
 

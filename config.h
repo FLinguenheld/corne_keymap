@@ -5,8 +5,8 @@ This is the c configuration file for the keymap
 #pragma once
 
 /* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+// #define MASTER_LEFT
+#define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ This is the c configuration file for the keymap
 
 // OLED
 #define OLED_BRIGHTNESS 90 // Protect my eyesss
-#define OLED_TIMEOUT 20000
+#define OLED_TIMEOUT 30000
 
 #ifdef MASTER_LEFT
     #define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_left.c"
@@ -37,10 +37,9 @@ This is the c configuration file for the keymap
 #define IGNORE_MOD_TAP_INTERRUPT
 
 
-
 // Mouse
 #define MOUSEKEY_INTERVAL 20
 #define MOUSEKEY_DELAY 0
-#define MOUSEKEY_TIME_TO_MAX 60
-#define MOUSEKEY_MAX_SPEED 7
+#define MOUSEKEY_TIME_TO_MAX 40
+#define MOUSEKEY_MAX_SPEED 10
 #define MOUSEKEY_WHEEL_DELAY 0
