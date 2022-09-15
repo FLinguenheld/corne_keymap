@@ -1,21 +1,35 @@
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Tap dance
 
+enum tap_dances {
+    TD_BSPC_DEL,
+    TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
+    TD_EXCLA_QUEST,
 
-// Macros
-enum custom_keycodes {
-    MAC_MAIL = SAFE_RANGE,
-    MAC_MAIL_SHORT,
-    MAC_VIM_COLON,
-    MAC_VIM_SCOLON,
+    TD_CURRENCY,
+    TD_PERCENT,
+
+    // Specific tap dances to replace LT(layer, kc)
+    TDS_ARROWS_COLON,
+    TDS_ARROWS_SCOLON,
+
+    // US --
+    US_TD_EXCLA_QUEST,
+
+    US_TDS_ARROWS_COLON,
+    US_TDS_ARROWS_SCOLON,
 };
+
 
 // --------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------
 // Simple tap-hold
 
 // How to :
-//      - Add an entry in the general enum
+//      - Add an entry in the enum
 //      - Add a case with it in the "process_record_user" function
-//      - Add it in the "qk_tap_dance_action_t" function with the two keys
+//      - Add it in the "qk_tap_dance_action_t" function with the two keys (end of this file)
 //      - Add in the layout TD(name)
 
 
@@ -38,53 +52,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // US
         case TD(US_TD_EXCLA_QUEST):
 
-
             action = &tap_dance_actions[TD_INDEX(keycode)];
             if (!record->event.pressed && action->state.count && !action->state.finished) {
                 tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
                 tap_code16(tap_hold->tap);
             }
-
-            break;
-
-
-// --------------------------------------------------
-// --------------------------------------------------
-// Macros
-    case MAC_MAIL:
-        if (record->event.pressed) {
-            // when keycode QMKBEST is pressed
-            SEND_STRING("florent@linguenheld.fr");
-        } else {
-            // when keycode QMKBEST is released
-        }
-        break;
-
-    case MAC_MAIL_SHORT:
-        if (record->event.pressed) {
-            // when keycode QMKURL is pressed
-            SEND_STRING("f@linguenheld.fr");
-        } else {
-            // when keycode QMKURL is released
-        }
-        break;
-
-    case MAC_VIM_COLON:
-        if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
-        }
-        break;
-
-    case MAC_VIM_SCOLON:
-        if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ";" SS_TAP(X_ESC));
-        }
-        break;
-
     }
+
     return true;
-
-
 }
 
 void tap_dance_tap_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -134,11 +109,11 @@ void tap_dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
 // So I have grouped them in one layer : _ARROWS
 
 // How to :
-//      - Add an entry in the general enum
+//      - Add an entry in the enum
 //      - Declare and create two functions :
 //                  *_finished()
 //                  *_reset()
-//      - Add it in the "qk_tap_dance_action_t" function with these new functions
+//      - Add it in the "qk_tap_dance_action_t" function with these new functions (end of this file)
 //      - Add in the layout TD(name)
 
 
@@ -316,7 +291,8 @@ void us_lt_arrows_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) 
 // ------------------------------------------------------------
 
 
-
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Set a long-ish tapping term for tap-dance keys
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -326,3 +302,28 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
     }
 }
+
+
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Link here enum and keys (simple or advanced)
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL), // Backspace - Del
+    [TD_TREMA_ALT] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT), // Trema - Alt
+    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES), // ! - ?
+
+    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO), // $ - €
+    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM), // % - BUG
+
+    // Specific tap dances to replace LT(layer, kc)
+    [TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_colon_finished, lt_arrows_colon_reset),
+    [TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_semicolon_finished, lt_arrows_semicolon_reset),
+
+    // US --
+    [US_TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(S(KC_1), S(KC_SLASH)), // ! - ?
+
+    [US_TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_colon_finished, us_lt_arrows_colon_reset),
+    [US_TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_semicolon_finished, us_lt_arrows_semicolon_reset),
+
+};

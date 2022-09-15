@@ -14,7 +14,7 @@ This is the c configuration file for the keymap
 
 // OLED
 #define OLED_BRIGHTNESS 90 // Protect my eyesss
-#define OLED_TIMEOUT 10000
+#define OLED_TIMEOUT 20000
 
 #ifdef MASTER_LEFT
     #define OLED_FONT_H "keyboards/crkbd/keymaps/corne_keymap/font/glcdfont_left.c"
@@ -29,12 +29,18 @@ This is the c configuration file for the keymap
 #define AUTO_SHIFT_TIMEOUT 122
 
 // Unicode
-#define UNICODE_SELECTED_MODES UC_LNX
+// #define UNICODE_SELECTED_MODES UC_LNX
 
 // Tap dance
 #define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 122 // Same as auto shift
 #define IGNORE_MOD_TAP_INTERRUPT
 
-// Combo
-#define COMBO_COUNT 17
+
+
+// Mouse
+#define MOUSEKEY_INTERVAL 20
+#define MOUSEKEY_DELAY 0
+#define MOUSEKEY_TIME_TO_MAX 60
+#define MOUSEKEY_MAX_SPEED 7
+#define MOUSEKEY_WHEEL_DELAY 0

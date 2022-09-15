@@ -18,7 +18,6 @@ https://docs.qmk.fm/#/
         // send_unicode_string("(ノಠ痊ಠ)ノ彡┻━┻");
 
 
-
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Layers -----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -40,181 +39,18 @@ enum layers {
 };
 
 
-// General enum for tap dance and combos
-enum {
-    TD_BSPC_DEL,
-    TD_TREMA_ALT, // The standard Mod-Tap doesn't work with "
-    TD_EXCLA_QUEST,
-
-    TD_CURRENCY,
-    TD_PERCENT,
-
-    // Specific tap dances to replace LT(layer, kc)
-    TDS_ARROWS_COLON,
-    TDS_ARROWS_SCOLON,
-
-    // US --
-    US_TD_EXCLA_QUEST,
-
-    US_TDS_ARROWS_COLON,
-    US_TDS_ARROWS_SCOLON,
-
-
-    // Combos
-    CB_MAIL_SHORT,
-    CB_MAIL_LONG,
-
-    US_CB_MAIL_SHORT,
-    US_CB_MAIL_LONG,
-
-    CB_VIM_COLON,
-    CB_VIM_SCOLON,
-};
-
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
-// Tap dance definitions --------------------------------------------------------------------------------------------------------------------------------
-
-#include "features/tap_dance.c" // Here to use layers
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_BSPC_DEL] = ACTION_TAP_DANCE_TAP_HOLD(KC_BSPC, KC_DEL), // Backspace - Del
-    [TD_TREMA_ALT] = ACTION_TAP_DANCE_TAP_HOLD(BP_DIAE, KC_LEFT_ALT), // Trema - Alt
-    [TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(BP_EXLM, BP_QUES), // ! - ?
-
-    [TD_CURRENCY] = ACTION_TAP_DANCE_TAP_HOLD(BP_DLR, BP_EURO), // $ - €
-    [TD_PERCENT] = ACTION_TAP_DANCE_TAP_HOLD(BP_PERC, BP_PERM), // % - BUG
-
-    // Specific tap dances to replace LT(layer, kc)
-    [TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_colon_finished, lt_arrows_colon_reset),
-    [TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lt_arrows_semicolon_finished, lt_arrows_semicolon_reset),
-
-    // US --
-    [US_TD_EXCLA_QUEST] = ACTION_TAP_DANCE_TAP_HOLD(S(KC_1), S(KC_SLASH)), // ! - ?
-
-    [US_TDS_ARROWS_COLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_colon_finished, us_lt_arrows_colon_reset),
-    [US_TDS_ARROWS_SCOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, us_lt_arrows_semicolon_finished, us_lt_arrows_semicolon_reset),
-
-
-};
+// Features ---------------------------------------------------------------------------------------------------------------------------------------------
+#include "features/tap_dance.c"
+#include "features/auto_shift.c"
+#include "features/combo.c"
+#include "features/oled.c"
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Leader key -------------------------------------------------------------------------------------------------------------------------------------------
 // The leader key is fun but costs memory and needs a dedicated key (mod tap doesn't work for it :@)
 // It appears better to use combos to play with macros
-
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
-// Combos -----------------------------------------------------------------------------------------------------------------------------------------------
-
-const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, TD(TD_BSPC_DEL), COMBO_END};
-
-const uint16_t PROGMEM combo_adjust[] = {LT(_LOWER, BP_COMM), LT(_RAISE, BP_DOT), COMBO_END};
-const uint16_t PROGMEM us_combo_adjust[] = {LT(_US_LOWER, KC_COMMA), LT(_US_RAISE, KC_DOT), COMBO_END};
-
-const uint16_t PROGMEM combo_fn[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
-const uint16_t PROGMEM us_combo_fn[] = {TD(US_TDS_ARROWS_SCOLON), TD(US_TDS_ARROWS_COLON), COMBO_END};
-
-const uint16_t PROGMEM combo_e_dans_l_a[] = {BP_EACU, BP_A, COMBO_END};
-const uint16_t PROGMEM combo_e_dans_l_o[] = {BP_EACU, BP_O, COMBO_END};
-
-const uint16_t PROGMEM combo_e_accent[] = {BP_EACU, BP_E, COMBO_END};
-const uint16_t PROGMEM combo_a_accent[] = {BP_E, BP_A, COMBO_END};
-const uint16_t PROGMEM combo_u_accent[] = {BP_E, BP_U, COMBO_END};
-const uint16_t PROGMEM combo_c_cedille[] = {BP_E, BP_C, COMBO_END};
-
-
-// With macros !
-const uint16_t PROGMEM combo_mail_short[] = {BP_M, BP_S, COMBO_END};
-const uint16_t PROGMEM combo_mail_long[] = {BP_M, BP_L, COMBO_END};
-
-const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
-const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
-
-
-const uint16_t PROGMEM combo_vim_colon[] = {BP_M, TD(TDS_ARROWS_COLON), COMBO_END};
-const uint16_t PROGMEM combo_vim_scolon[] = {BP_M, TD(TDS_ARROWS_SCOLON), COMBO_END};
-
-
-combo_t key_combos[COMBO_COUNT] = {
-
-    COMBO(switch_bepo_usa, TG(_US_BASE)),
-
-    COMBO(combo_adjust, MO(_ADJUST)),
-    COMBO(us_combo_adjust, MO(_US_ADJUST)),
-
-    COMBO(combo_fn, MO(_FN)),
-    COMBO(us_combo_fn, MO(_US_FN)),
-
-    COMBO(combo_e_dans_l_a, BP_AE),
-    COMBO(combo_e_dans_l_o, BP_OE),
-
-    COMBO(combo_e_accent, BP_EGRV),
-    COMBO(combo_a_accent, BP_AGRV),
-    COMBO(combo_u_accent, BP_UGRV),
-    COMBO(combo_c_cedille, BP_CCED),
-
-
-    [CB_MAIL_SHORT] = COMBO_ACTION(combo_mail_short),
-    [CB_MAIL_LONG] = COMBO_ACTION(combo_mail_long),
-
-    [US_CB_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
-    [US_CB_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
-
-
-    [CB_VIM_COLON] = COMBO_ACTION(combo_vim_colon),
-    [CB_VIM_SCOLON] = COMBO_ACTION(combo_vim_scolon),
-};
-
-
-    // TD(TDS_ARROWS_SCOLON) ,  LT(_LOWER, BP_COMM) ,    LCTL_T(KC_SPC)     ,        KC_ENT             ,  LT(_RAISE, BP_DOT)  ,  TD(TDS_ARROWS_COLON)
-
-void process_combo_event(uint16_t combo_index, bool pressed) {
-
-  switch(combo_index) {
-    case CB_MAIL_SHORT:
-    case US_CB_MAIL_SHORT:
-      if (pressed) {
-        SEND_STRING("f@linguenheld.fr");
-      }
-      break;
-
-    case CB_MAIL_LONG:
-    case US_CB_MAIL_LONG:
-      if (pressed) {
-        SEND_STRING("florent@linguenheld.fr");
-      }
-      break;
-
-    case CB_VIM_COLON:
-      if (pressed) {
-        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
-      }
-      break;
-
-    case CB_VIM_SCOLON:
-      if (pressed) {
-        SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ";" SS_TAP(X_ESC));
-      }
-      break;
-
-    // case BSPC_LSFT_CLEAR:
-      // if (pressed) {
-        // tap_code16(KC_END);
-        // tap_code16(S(KC_HOME));
-        // tap_code16(KC_BSPC);
-      // }
-      // break;
-
-  }
-}
-
-
-
-
-
-
-
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -298,12 +134,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     , KC_AUDIO_MUTE  , KC_AUDIO_VOL_UP,   KC_AUDIO_VOL_DOWN   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    MAC_MAIL    ,       _______         ,
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     , XXXXXXX ,       _______         ,
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                              MAC_VIM_SCOLON  ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,   MAC_VIM_COLON
+                                                                 XXXXXXX      ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
@@ -330,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_TAB               ,     KC_Z       ,    XXXXXXX     ,     KC_P       ,     KC_O       ,        KC_J           ,                 KC_K          ,      KC_V      ,      KC_D      ,      KC_L      ,      KC_M      ,     TD(TD_BSPC_DEL)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      LGUI_T(KC_ESC)        ,     KC_A       ,     KC_U       ,     KC_I       ,     KC_E       ,  TD(US_TD_EXCLA_QUEST),                 KC_C          ,      KC_T      ,      KC_S      ,      KC_R      ,      KC_N      ,      KC_LEAD/* RCS_T(KC_LEAD) */   ,
+      LGUI_T(KC_ESC)        ,     KC_A       ,     KC_U       ,     KC_I       ,     KC_E       ,  TD(US_TD_EXCLA_QUEST),                 KC_C          ,      KC_T      ,      KC_S      ,      KC_R      ,      KC_N      ,      RCS_T(KC_LEAD)   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
        KC_LALT              ,     KC_B       ,     KC_Y       ,     KC_X       ,     KC_W       ,     S(KC_COMMA)       ,               S(KC_DOT)       ,      KC_Q      ,      KC_G      ,      KC_H      ,      KC_F      ,      SFT_T(S(KC_6))   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
@@ -386,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     , KC_AUDIO_MUTE  , KC_AUDIO_VOL_UP,   KC_AUDIO_VOL_DOWN   ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX    ,       _______         ,
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
@@ -409,199 +245,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 };
-
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
-// Auto shift -------------------------------------------------------------------------------------------------------------------------------------------
-
-// Only for letters and on basis layers
-// Exceptions like Tab underneath
-
-bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
-
-    if (IS_LAYER_ON(_BASE)) {
-
-        switch (keycode) {
-            case BP_A:
-            case BP_B:
-            case BP_C:
-            case BP_D:
-            case BP_E:
-            case BP_F:
-            case BP_G:
-            case BP_H:
-            case BP_I:
-            case BP_J:
-            case BP_K:
-            case BP_L:
-            case BP_M:
-            case BP_N:
-            case BP_O:
-            case BP_P:
-            case BP_Q:
-            case BP_R:
-            case BP_S:
-            case BP_T:
-            case BP_U:
-            case BP_V:
-            case BP_W:
-            case BP_X:
-            case BP_Y:
-            case BP_Z:
-
-            case BP_EACU: // É
-            case BP_EGRV: // È
-            case BP_ECIR: // Ê
-
-            case BP_CCED: // Ç
-            case BP_AGRV: // À
-            case BP_UGRV: // Ù
-
-            case BP_OE: // Œ
-            case BP_AE: // Æ
-
-                return true;
-        }
-    }
-    else if (IS_LAYER_ON(_US_BASE)) {
-        
-        switch (keycode) {
-            case KC_A:
-            case KC_B:
-            case KC_C:
-            case KC_D:
-            case KC_E:
-            case KC_F:
-            case KC_G:
-            case KC_H:
-            case KC_I:
-            case KC_J:
-            case KC_K:
-            case KC_L:
-            case KC_M:
-            case KC_N:
-            case KC_O:
-            case KC_P:
-            case KC_Q:
-            case KC_R:
-            case KC_S:
-            case KC_T:
-            case KC_U:
-            case KC_V:
-            case KC_W:
-            case KC_X:
-            case KC_Y:
-            case KC_Z:
-
-                return true;
-        }
-    }
-
-    switch (keycode) {
-        case KC_TAB:
-        case KC_ENT:
-            return true;
-    }
-    
-    return get_custom_auto_shifted_key(keycode, record);
-}
-
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
-// Oled display -----------------------------------------------------------------------------------------------------------------------------------------
-
-// Logos (and fonts) are in the glcdfont_.c files
-static void render_logo(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80, 0x80, 0x80, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x80, 0x80, 0x80, 0x80,
-        0xA0, 0xA0, 0xA0, 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xA0, 0xA0, 0xA0, 0xA0,
-        0xC0, 0xC0, 0xC0, 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xC0, 0xC0, 0xC0, 0xC0, 0x00
-    };
-
-    oled_write_P(qmk_logo, false);
-}
-static void render_logo_us(void) {
-    static const char PROGMEM qmk_logo[] = {
-        0x80, 0x80, 0x8D, 0x8E, 0x8F, 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F,
-        0xA0, 0xA0, 0xAD, 0xAE, 0xAF, 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF,
-        0xC0, 0xC0, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xDF, 0x00
-    };
-
-    oled_write_P(qmk_logo, false);
-}
-
-
-// Return the logo for the right part
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-
-#ifdef MASTER_RIGHT
-    return OLED_ROTATION_180;
-#endif
-
-    return rotation;
-}
-
-// Wonderful display !
-bool oled_task_user(void) {
-
-#ifdef MASTER_LEFT
-    oled_write_P(PSTR("\n"), false);
-#endif
-
-    // oled_clear() prevents the timeout, I used oled_write_ln to fill lines with spaces
-    bool us = false;
-
-        switch (get_highest_layer(layer_state)) {
-            case _US_LOWER:
-            case _US_RAISE:
-            case _US_ARROWS:
-            case _US_ADJUST:
-            case _US_FN:
-                us = true;
-                oled_write_ln_P(PSTR("    $$$$$ USA $$$$$"), false);
-        }
-
-
-        switch (get_highest_layer(layer_state)) {
-            case _BASE:
-                render_logo();
-                break;
-
-            case _US_BASE:
-                render_logo_us();
-                break;
-
-            case _LOWER:
-            case _US_LOWER:
-                oled_write_ln_P(PSTR("\n      -- LOWER --"), false);
-                break;
-
-            case _RAISE:
-            case _US_RAISE:
-                oled_write_ln_P(PSTR("\n      -- RAISE --"), false);
-                break;
-
-            case _ARROWS:
-            case _US_ARROWS:
-                oled_write_ln_P(PSTR("\n    --- ARROWS ---"), false);
-                break;
-
-            case _ADJUST:
-            case _US_ADJUST:
-                oled_write_ln_P(PSTR("\n   ~~~~ ADJUST ~~~~"), false);
-                break;
-
-            case _FN:
-            case _US_FN:
-                oled_write_ln_P(PSTR("\n    ~~~~~ FN ~~~~~"), false);
-                break;
-        }
-
-    // Add an empty line to clear the screen
-    if (!us){
-        oled_write_ln_P(PSTR(""), false);
-    }
-
-    // oled_invert(true);
-    return false;
-}
