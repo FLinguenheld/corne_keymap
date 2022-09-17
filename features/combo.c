@@ -70,7 +70,6 @@ const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
 const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
 
 
-
 // --------------------------------------------------
 // --------------------------------------------------
 // Sequences fo keys

@@ -39,7 +39,20 @@ typedef struct {
     uint16_t held;
 } tap_dance_tap_hold_t;
 
+// Timer to shutdown the oled screen
+static uint16_t oled_timer = 0;
+static bool     is_key_processed = true;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    // Restart the timer on all pressed key
+    // The timer value is read by the oled_task_user() function
+    if (record->event.pressed) {
+        oled_timer = timer_read();
+        is_key_processed = true;
+    }
+
+    // --
     qk_tap_dance_action_t *action;
 
     switch (keycode) {
