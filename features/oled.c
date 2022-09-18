@@ -60,6 +60,10 @@ void oled_display(void) {
                 };
 
                 oled_write_P(qmk_logo, false);
+
+#ifdef MASTER_RIGHT
+    oled_write_P(PSTR("\n"), false);
+#endif
         }
 
     // Better place
