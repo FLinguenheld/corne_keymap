@@ -45,13 +45,13 @@ uint16_t COMBO_LEN = COMBO_LENGTH;
 // --------------------------------------------------
 // --------------------------------------------------
 // Sequences fo keys
-const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, TD(TD_BSPC_DEL), COMBO_END};
+const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, KC_BSPC, COMBO_END};
 
 const uint16_t PROGMEM combo_adjust[] = {LT(_LOWER, BP_COMM), LT(_RAISE, BP_DOT), COMBO_END};
 const uint16_t PROGMEM us_combo_adjust[] = {LT(_US_LOWER, KC_COMMA), LT(_US_RAISE, KC_DOT), COMBO_END};
 
 const uint16_t PROGMEM combo_fn[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
-const uint16_t PROGMEM us_combo_fn[] = {TD(US_TDS_ARROWS_SCOLON), TD(US_TDS_ARROWS_COLON), COMBO_END};
+const uint16_t PROGMEM us_combo_fn[] = {LT(_US_ARROWS, KC_SCLN), TD(US_TDS_ARROWS_COLON), COMBO_END};
 
 const uint16_t PROGMEM combo_e_dans_l_a[] = {BP_EACU, BP_A, COMBO_END};
 const uint16_t PROGMEM combo_e_dans_l_o[] = {BP_EACU, BP_O, COMBO_END};

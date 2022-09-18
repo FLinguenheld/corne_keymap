@@ -63,7 +63,11 @@ void oled_display(void) {
         }
 
     // Better place
+#ifdef MASTER_RIGHT
+    oled_write_P(PSTR("\n"), false);
+#else 
     oled_write_P(PSTR("\n\n"), false);
+#endif
 
         // Current layer
         switch (get_highest_layer(layer_state)) {
