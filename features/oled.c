@@ -131,3 +131,8 @@ bool oled_task_user(void) {
     }
     return false;
 }
+
+// Shut both oled (witout the slave stays on)
+void suspend_power_down_kb(void) {
+    oled_off();
+}
