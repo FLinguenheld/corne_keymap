@@ -5,8 +5,8 @@ This is the c configuration file for the keymap
 #pragma once
 
 /* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+// #define MASTER_LEFT
+#define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ This is the c configuration file for the keymap
 #define OLED_KEY_TIMEOUT 25000
 
 // Auto shift
-#define AUTO_SHIFT_TIMEOUT 120
+#define AUTO_SHIFT_TIMEOUT 115
 
 
 // Redefine ALT + ¨  -  SHITF + ^  -  CTRL + space
@@ -43,7 +43,7 @@ This is the c configuration file for the keymap
 
 // Tap dance
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 120 // Same as auto shift
+#define TAPPING_TERM 115 // Same as auto shift
 #define IGNORE_MOD_TAP_INTERRUPT
 
 // Mouse
