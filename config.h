@@ -42,9 +42,10 @@ This is the c configuration file for the keymap
 // #define UNICODE_SELECTED_MODES UC_LNX
 
 // Tap dance
-#define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 115 // Same as auto shift
-#define IGNORE_MOD_TAP_INTERRUPT
+// undef TAP_DANCE_ENABLE
+// #define TAPPING_FORCE_HOLD
+// #define TAPPING_TERM 115 // Same as auto shift
+// #define IGNORE_MOD_TAP_INTERRUPT
 
 // Mouse
 #define MOUSEKEY_INTERVAL 20
@@ -52,3 +53,6 @@ This is the c configuration file for the keymap
 #define MOUSEKEY_TIME_TO_MAX 40
 #define MOUSEKEY_MAX_SPEED 10
 #define MOUSEKEY_WHEEL_DELAY 0
+
+
+// #define TAPPING_TOGGLE 1

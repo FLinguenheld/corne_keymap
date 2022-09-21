@@ -79,11 +79,8 @@ const uint16_t PROGMEM switch_bepo_usa[] = {KC_TAB, KC_BSPC, COMBO_END};
 const uint16_t PROGMEM combo_adjust[] = {LT(_LOWER, BP_COMM), LT(_RAISE, BP_DOT), COMBO_END};
 const uint16_t PROGMEM us_combo_adjust[] = {LT(_US_LOWER, KC_COMMA), LT(_US_RAISE, KC_DOT), COMBO_END};
 
-const uint16_t PROGMEM combo_fn[] = {TD(TDS_ARROWS_SCOLON), TD(TDS_ARROWS_COLON), COMBO_END};
-const uint16_t PROGMEM us_combo_fn[] = {LT(_US_ARROWS, KC_SCLN), TD(US_TDS_ARROWS_COLON), COMBO_END};
-
-const uint16_t PROGMEM combo_fn_osl[] = {TD(TDS_ARROWS_COLON), BP_F, COMBO_END};
-const uint16_t PROGMEM us_combo_fn_osl[] = {TD(US_TDS_ARROWS_COLON), KC_F, COMBO_END};
+const uint16_t PROGMEM combo_fn_osl[] = {TT(_ARROWS), BP_F, COMBO_END};
+const uint16_t PROGMEM us_combo_fn_osl[] = {TT(_US_ARROWS), KC_F, COMBO_END};
 
 // --
 const uint16_t PROGMEM combo_e_dans_l_a[] = {BP_EACU, BP_A, COMBO_END};
@@ -155,9 +152,6 @@ combo_t key_combos[] = {
 
     [LAYER_ADJUST] = COMBO(combo_adjust, MO(_ADJUST)),
     [US_LAYER_ADJUST] = COMBO(us_combo_adjust, MO(_US_ADJUST)),
-
-    [LAYER_FN] = COMBO(combo_fn, MO(_FN)),
-    [US_LAYER_FN] = COMBO(us_combo_fn, MO(_US_FN)),
 
     [LAYER_FN_OSL] = COMBO(combo_fn_osl, OSL(_FN)),
     [US_LAYER_FN_OSL] = COMBO(us_combo_fn_osl, OSL(_US_FN)),
