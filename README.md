@@ -30,3 +30,29 @@ Or outside the folder :
 
 [qmk](https://docs.qmk.fm/#/)  
 [foostan](https://github.com/foostan/crkbd)
+
+#### Combos
+
+
+|      keys        |                        |
+|------------------|------------------------|
+|   tab + del      |   switch to us         |
+|   é + a          |   æ                    |
+|   é + o          |   œ                    |
+|   e + é          |   è                    |
+|   e + a          |   à                    |
+|   e + c          |   ç                    |
+|   e + u          |   ù                    |
+|   a + t          |   @                    |
+|   b + s          |   \                    |
+|   c + r          |   ^                    |
+|   d + '          |   "                    |
+|   g + r          |   `                    |
+|   h + s          |   #                    |
+|   p + i          |   |                    |
+|   s + l          |   /                    |
+|   t + d          |   ~                    |
+|   t + r          |   -                    |
+|   s + r          |   _                    |
+|   d + l          |   $                    |
+|   e + r          |   €                    |

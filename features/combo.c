@@ -34,12 +34,20 @@ enum combos {
         US_AMPERSAND,
     AT,
         US_AT,
+    BACKSLASH,
+        US_BACKSLASH,
     CIRCUMFLEX,
         US_CIRCUMFLEX,
+    DOUBLE_QUOTE,
+        US_DOUBLE_QUOTE,
+    GRAVE,
+        US_GRAVE,
     HASH,
         US_HASH,
     PIPE,
         US_PIPE,
+    SLASH,
+        US_SLASH,
     TILDE,
         US_TILDE,
     TIRET,              // Sorry Elis but it's better than dash
@@ -93,14 +101,26 @@ const uint16_t PROGMEM us_combo_ampersand[] = {KC_A, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_at[] = {BP_A, BP_T, COMBO_END};
 const uint16_t PROGMEM us_combo_at[] = {KC_A, KC_T, COMBO_END};
 
+const uint16_t PROGMEM combo_backslash[] = {BP_B, BP_S, COMBO_END};
+const uint16_t PROGMEM us_combo_backslash[] = {KC_B, KC_S, COMBO_END};
+
 const uint16_t PROGMEM combo_circumflex[] = {BP_C, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_circumflex[] = {KC_C, KC_R, COMBO_END};
+
+const uint16_t PROGMEM combo_double_quote[] = {BP_D, RCS_T(BP_QUOT), COMBO_END};
+const uint16_t PROGMEM us_combo_double_quote[] = {KC_D, RCS_T(KC_QUOTE), COMBO_END};
+
+const uint16_t PROGMEM combo_grave[] = {BP_G, BP_R, COMBO_END};
+const uint16_t PROGMEM us_combo_grave[] = {KC_G, KC_R, COMBO_END};
 
 const uint16_t PROGMEM combo_hash[] = {BP_H, BP_S, COMBO_END};
 const uint16_t PROGMEM us_combo_hash[] = {KC_H, KC_S, COMBO_END};
 
 const uint16_t PROGMEM combo_pipe[] = {BP_P, BP_E, COMBO_END};
 const uint16_t PROGMEM us_combo_pipe[] = {KC_P, KC_E, COMBO_END};
+
+const uint16_t PROGMEM combo_slash[] = {BP_S, BP_L, COMBO_END};
+const uint16_t PROGMEM us_combo_slash[] = {KC_S, KC_L, COMBO_END};
 
 const uint16_t PROGMEM combo_tilde[] = {BP_T, BP_D, COMBO_END};
 const uint16_t PROGMEM us_combo_tilde[] = {KC_T, KC_D, COMBO_END};
@@ -115,7 +135,7 @@ const uint16_t PROGMEM us_combo_underscore[] = {KC_S, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_dollar[] = {BP_D, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_dollar[] = {KC_D, KC_L, COMBO_END};
 
-const uint16_t PROGMEM combo_euro[] = {BP_E, BP_U, BP_R, COMBO_END};
+const uint16_t PROGMEM combo_euro[] = {BP_E, BP_R, COMBO_END};
 // const uint16_t PROGMEM us_combo_euro[] = {KC_E, KC_U, KC_R, COMBO_END};
 
 // With macros !
@@ -158,8 +178,17 @@ combo_t key_combos[] = {
     [AT] = COMBO(combo_at, BP_AT),
     [US_AT] = COMBO(us_combo_at, KC_AT),
 
+    [BACKSLASH] = COMBO(combo_backslash, BP_BSLS),
+    [US_BACKSLASH] = COMBO(us_combo_backslash, KC_BACKSLASH),
+
     [CIRCUMFLEX] = COMBO(combo_circumflex, BP_CIRC),
     [US_CIRCUMFLEX] = COMBO(us_combo_circumflex, KC_CIRCUMFLEX),
+
+    [DOUBLE_QUOTE] = COMBO(combo_double_quote, BP_DQUO),
+    [US_DOUBLE_QUOTE] = COMBO(us_combo_double_quote, KC_DOUBLE_QUOTE),
+
+    [GRAVE] = COMBO(combo_grave, BP_GRV),
+    [US_GRAVE] = COMBO(us_combo_grave, KC_GRAVE),
 
     [HASH] = COMBO(combo_hash, BP_HASH),
     [US_HASH] = COMBO(us_combo_hash, KC_HASH),
@@ -167,10 +196,13 @@ combo_t key_combos[] = {
     [PIPE] = COMBO(combo_pipe, BP_PIPE),
     [US_PIPE] = COMBO(us_combo_pipe, KC_PIPE),
 
+    [SLASH] = COMBO(combo_slash, BP_SLSH),
+    [US_SLASH] = COMBO(us_combo_slash, KC_SLASH),
+
     [TILDE] = COMBO(combo_tilde, BP_TILD),
     [US_TILDE] = COMBO(us_combo_tilde, KC_TILDE),
 
-    [TIRET] = COMBO(combo_tiret, KC_MINS),
+    [TIRET] = COMBO(combo_tiret, BP_MINS),
     [US_TIRET] = COMBO(us_combo_tiret, KC_MINUS),
 
     [UNDERSCORE] = COMBO(combo_underscore, BP_UNDS),
