@@ -136,7 +136,6 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             register_code16((!shifted) ? KC_EXLM : KC_QUES);
             break;
 
-
         default:
             if (shifted) {
                 add_weak_mods(MOD_BIT(KC_LSFT));
@@ -164,7 +163,6 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
         case KC_EXLM:
             unregister_code16((!shifted) ? KC_EXLM : KC_QUES);
             break;
-
 
         default:
             // & 0xFF gets the Tap key for Tap Holds, required when using Retro Shift

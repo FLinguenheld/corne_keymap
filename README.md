@@ -4,7 +4,7 @@ My personal keymap for the corne keyboard.
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-****
+
 #### Install
 
 Copy this repo in the folder :
@@ -33,7 +33,6 @@ Or outside the folder :
 
 #### Combos
 
-
 |      keys        |                        |
 |------------------|------------------------|
 |   tab + del      |   switch to us         |
@@ -52,7 +51,7 @@ Or outside the folder :
 |   d + '          |   "                    |
 |   g + r          |   `                    |
 |   h + s          |   #                    |
-|   p + i          |   |                    |
+|   p + e          |   |                    |
 |   s + .          |   ;                    |
 |   s + l          |   /                    |
 |   t + d          |   ~                    |
