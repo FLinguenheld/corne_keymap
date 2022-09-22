@@ -37,6 +37,8 @@ Or outside the folder :
 |      keys        |                        |
 |------------------|------------------------|
 |   tab + del      |   switch to us         |
+|   lower + raise  |   adjust               |
+|   arrows + f     |   fn (osl)             |
 |   é + a          |   æ                    |
 |   é + o          |   œ                    |
 |   e + é          |   è                    |
@@ -46,10 +48,12 @@ Or outside the folder :
 |   a + t          |   @                    |
 |   b + s          |   \                    |
 |   c + r          |   ^                    |
+|   c + .          |   :                    |
 |   d + '          |   "                    |
 |   g + r          |   `                    |
 |   h + s          |   #                    |
 |   p + i          |   |                    |
+|   s + .          |   ;                    |
 |   s + l          |   /                    |
 |   t + d          |   ~                    |
 |   t + r          |   -                    |

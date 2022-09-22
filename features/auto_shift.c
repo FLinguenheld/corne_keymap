@@ -6,7 +6,8 @@
 
 bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 
-    if (IS_LAYER_ON(_BASE)) {
+    // if (IS_LAYER_ON(_BASE)) {
+    if (!is_currently_in_us()) {
 
         switch (keycode) {
             case BP_A:
@@ -50,7 +51,7 @@ bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
                 return true;
         }
     }
-    else if (IS_LAYER_ON(_US_BASE)) {
+    else {
         
         switch (keycode) {
             case KC_A:
@@ -105,7 +106,6 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 
         case BP_EXLM:
         case BP_PERC:
-        case BP_DLR:
 
         // US
         case KC_EXLM: // !
@@ -129,9 +129,6 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             break;
         case BP_PERC:
             register_code16((!shifted) ? BP_PERC : ALGR(BP_PERC));
-            break;
-        case BP_DLR:
-            register_code16((!shifted) ? BP_DLR : BP_EURO);
             break;
 
         // US
@@ -161,9 +158,6 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             break;
         case BP_PERC:
             unregister_code16((!shifted) ? BP_PERC : ALGR(BP_PERC));
-            break;
-        case BP_DLR:
-            unregister_code16((!shifted) ? BP_DLR : BP_EURO);
             break;
 
         // US
