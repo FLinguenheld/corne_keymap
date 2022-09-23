@@ -59,3 +59,9 @@ Or outside the folder :
 |   s + r          |   _                    |
 |   d + l          |   $                    |
 |   e + r          |   €                    |
+
+#### Layouts
+
+![base](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/base.png "layout")  
+![lower](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/lower.png "layout")  
+![raise](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/raise.png "layout")  
