@@ -51,6 +51,7 @@ void oled_display(void) {
         switch (get_highest_layer(layer_state)) {
             case _US_LOWER:
             case _US_RAISE:
+            case _US_MOUSE:
             case _US_ARROWS:
             case _US_ADJUST:
             case _US_FN:
@@ -90,6 +91,14 @@ void oled_display(void) {
                     0x20, 0x20, 0x20, 0x20, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0x20, 0x20, 0x20, 0x20, 0x00,
                 };
                 oled_write_P(qmk_raise, false);
+                break;
+
+            case _MOUSE:
+            case _US_MOUSE:
+                static const char PROGMEM qmk_mouse[] = {
+                    0x20, 0x20, 0x20, 0x20, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x20, 0x20, 0x20, 0x20, 0x00,
+                };
+                oled_write_P(qmk_mouse, false);
                 break;
 
             case _ARROWS:

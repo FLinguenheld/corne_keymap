@@ -51,7 +51,7 @@ Or outside the folder :
 |   d + '          |   "                    |
 |   g + r          |   `                    |
 |   h + s          |   #                    |
-|   p + e          |   |                    |
+|   p + e          |   pipe                 |
 |   s + .          |   ;                    |
 |   s + l          |   /                    |
 |   t + d          |   ~                    |

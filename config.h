@@ -5,8 +5,8 @@ This is the c configuration file for the keymap
 #pragma once
 
 /* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+// #define MASTER_LEFT
+#define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -42,8 +42,31 @@ This is the c configuration file for the keymap
 // #define UNICODE_SELECTED_MODES UC_LNX
 
 // Mouse
-#define MOUSEKEY_INTERVAL 20
-#define MOUSEKEY_DELAY 0
-#define MOUSEKEY_TIME_TO_MAX 40
-#define MOUSEKEY_MAX_SPEED 10
-#define MOUSEKEY_WHEEL_DELAY 0
+#define MK_3_SPEED
+#define MK_MOMENTARY_ACCEL
+// #define MK_COMBINED
+
+#define MK_C_OFFSET_0 1
+#define MK_C_INTERVAL_0 12
+
+#define MK_C_OFFSET_1 4
+#define MK_C_INTERVAL_1 18
+
+#define MK_C_OFFSET_UNMOD 12
+#define MK_C_INTERVAL_UNMOD 17
+
+#define MK_C_OFFSET_2 25
+#define MK_C_INTERVAL_2 15
+
+#define MK_W_OFFSET_UNMOD 3
+#define MK_W_INTERVAL_UNMOD 80
+
+#define MK_W_OFFSET_0 1
+#define MK_W_INTERVAL_0 300
+
+#define MK_W_OFFSET_1 4
+#define MK_W_INTERVAL_1 200
+
+#define MK_W_OFFSET_2 5
+#define MK_W_INTERVAL_2 30
+
