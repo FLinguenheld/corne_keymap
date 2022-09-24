@@ -53,7 +53,7 @@ Or outside the folder :
 |   h + s          |   #                    |
 |   p + e          |   pipe                 |
 |   s + .          |   ;                    |
-|   s + l          |   /                    |
+|   s + b + l      |   /                    |
 |   t + d          |   ~                    |
 |   t + r          |   -                    |
 |   s + r          |   _                    |
@@ -65,3 +65,7 @@ Or outside the folder :
 ![base](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/base.png "layout")  
 ![lower](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/lower.png "layout")  
 ![raise](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/raise.png "layout")  
+![mouse](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/mouse.png "layout")  
+![arrows](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/arrows.png "layout")  
+![adjust](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/adjust.png "layout")  
+![fn](https://raw.githubusercontent.com/FLinguenheld/corne_keymap/main/images/fn.png "layout")  

@@ -101,8 +101,8 @@ const uint16_t PROGMEM us_combo_ampersand[] = {KC_A, KC_M, COMBO_END};
 const uint16_t PROGMEM combo_at[] = {BP_A, BP_T, COMBO_END};
 const uint16_t PROGMEM us_combo_at[] = {KC_A, KC_T, COMBO_END};
 
-const uint16_t PROGMEM combo_backslash[] = {BP_B, BP_S, COMBO_END};
-const uint16_t PROGMEM us_combo_backslash[] = {KC_B, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_backslash[] = {BP_B, BP_S, BP_L, COMBO_END};
+const uint16_t PROGMEM us_combo_backslash[] = {KC_B, KC_S, BP_L, COMBO_END};
 
 const uint16_t PROGMEM combo_circumflex[] = {BP_C, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_circumflex[] = {KC_C, KC_R, COMBO_END};

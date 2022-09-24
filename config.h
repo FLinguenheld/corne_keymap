@@ -5,8 +5,8 @@ This is the c configuration file for the keymap
 #pragma once
 
 /* Select hand configuration */
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ This is the c configuration file for the keymap
 #define MK_C_OFFSET_UNMOD 12
 #define MK_C_INTERVAL_UNMOD 17
 
-#define MK_C_OFFSET_2 25
+#define MK_C_OFFSET_2 27
 #define MK_C_INTERVAL_2 15
 
 #define MK_W_OFFSET_UNMOD 3
