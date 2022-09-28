@@ -45,20 +45,21 @@ Or outside the folder :
 |   e + c          |   ç                    |
 |   e + u          |   ù                    |
 |   a + t          |   @                    |
-|   b + s          |   \                    |
 |   c + r          |   ^                    |
-|   c + .          |   :                    |
 |   d + '          |   "                    |
 |   g + r          |   `                    |
 |   h + s          |   #                    |
+|   a + p          |   &                    |
 |   p + e          |   pipe                 |
-|   s + .          |   ;                    |
-|   s + b + l      |   /                    |
+|   p + :          |   ;                    |
+|   s + b          |   /                    |
+|   d + r          |   \                    |
 |   t + d          |   ~                    |
 |   t + r          |   -                    |
 |   s + r          |   _                    |
 |   d + l          |   $                    |
 |   e + r          |   €                    |
+|   enter + s      |   shifted enter        |
 
 #### Layouts
 

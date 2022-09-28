@@ -33,7 +33,7 @@ void oled_display(void) {
                 };
 
                 oled_write_P(qmk_logo, false);
-                return;
+                break;
 
             case _US_BASE:
                 static const char PROGMEM qmk_logo_us[] = {
@@ -44,8 +44,10 @@ void oled_display(void) {
                 };
 
                 oled_write_P(qmk_logo_us, false);
-                return;
         }
+
+
+    if (get_highest_layer(layer_state) != _BASE && get_highest_layer(layer_state) != _US_BASE){
 
         // US banner
         switch (get_highest_layer(layer_state)) {
@@ -56,33 +58,17 @@ void oled_display(void) {
             case _US_FN:
 
                 static const char PROGMEM qmk_logo[] = {
-                    0x08, 0x08, 0x08, 0x08, 0x08, 0x20, 0x20, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x20, 0x20, 0x08, 0x08, 0x08, 0x08, 0x08, 0x00,
+                    0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x20, 0x20, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x20, 0x20, 0x08, 0x08, 0x00,
                 };
 
                 oled_write_P(qmk_logo, false);
-
-#ifdef MASTER_RIGHT
-    oled_write_P(PSTR("\n"), false);
-#endif
         }
 
-    // Better place
-#ifdef MASTER_RIGHT
-    oled_write_P(PSTR("\n"), false);
-#else 
-    oled_write_P(PSTR("\n\n"), false);
-#endif
+        // Better place
+        oled_write_P(PSTR("\n\n"), false);
 
         // Current layer
         switch (get_highest_layer(layer_state)) {
-
-            // case _LOWER:
-            // case _US_LOWER:
-                // static const char PROGMEM qmk_lower[] = {
-                    // 0x20, 0x20, 0x20, 0x20, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x20, 0x20, 0x20, 0x20, 0x00,
-                // };
-                // oled_write_P(qmk_lower, false);
-                // break;
 
             case _NUMERIC:
             case _US_NUMERIC:
@@ -124,6 +110,36 @@ void oled_display(void) {
                 oled_write_P(qmk_fn, false);
                 break;
         }
+    }
+
+    // Modifier keys --
+    if (get_mods()){
+
+        oled_set_cursor(0, 0);
+
+        if (get_mods() & MOD_MASK_CTRL) {
+            oled_write_char(0x7E, false);
+            oled_write_char(0x7F, false);
+        }
+        if (get_mods() & MOD_BIT(KC_LALT)) {
+            oled_write_char(0x9E, false);
+            oled_write_char(0x9F, false);
+        }
+        if (get_mods() & MOD_BIT(KC_RALT)) {
+            oled_write_char(0xBE, false);
+            oled_write_char(0xBF, false);
+        }
+        if (get_mods() & MOD_MASK_SHIFT) {
+            oled_write_char(0xDE, false);
+            oled_write_char(0xDF, false);
+        }
+        if (get_mods() & MOD_MASK_GUI) {
+            oled_write_char(0x7C, false);
+            oled_write_char(0x7D, false);
+        }
+
+        oled_write_char(0x20, false);
+    }
 };
 
 

@@ -32,6 +32,18 @@ enum combos {
     ENTER_SHIFTED,
         US_ENTER_SHIFTED,
 
+    CONTROL_SHIFT,
+        US_CONTROL_SHIFT,
+
+    CONTROL_ALT,
+        US_CONTROL_ALT,
+
+    CONTROL_SHIFT_ALT,
+        US_CONTROL_SHIFT_ALT,
+
+    RIGHT_ALT,
+        US_RIGHT_ALT,
+
     // --
     AMPERSAND,
         US_AMPERSAND,
@@ -51,8 +63,8 @@ enum combos {
         US_HASH,
     PIPE,
         US_PIPE,
-    // SEMICOLON,
-        // US_SEMICOLON,
+    SEMICOLON,
+        US_SEMICOLON,
     SLASH,
         US_SLASH,
     TILDE,
@@ -95,6 +107,19 @@ const uint16_t PROGMEM us_combo_fn_osl[] = {LT(_US_ARROWS, KC_DOT), KC_F, COMBO_
 const uint16_t PROGMEM combo_enter_shifted[] = {LT(_NUMERIC, KC_ENT), BP_S, COMBO_END};
 const uint16_t PROGMEM us_combo_enter_shifted[] = {LT(_US_NUMERIC, KC_ENT), KC_S, COMBO_END};
 
+const uint16_t PROGMEM combo_control_shift[] = {KC_LCPO, BP_S, COMBO_END};
+const uint16_t PROGMEM us_combo_control_shift[] = {KC_LCPO, KC_S, COMBO_END};
+
+const uint16_t PROGMEM combo_control_alt[] = {KC_LCPO, BP_A, COMBO_END};
+const uint16_t PROGMEM us_combo_control_alt[] = {KC_LCPO, KC_A, COMBO_END};
+
+const uint16_t PROGMEM combo_control_shift_alt[] = {KC_LCPO, BP_S, BP_A, COMBO_END};
+const uint16_t PROGMEM us_combo_control_shift_alt[] = {KC_LCPO, KC_S, KC_A, COMBO_END};
+
+const uint16_t PROGMEM combo_right_alt[] = {KC_LAPO, BP_G, COMBO_END};
+const uint16_t PROGMEM us_combo_right_alt[] = {KC_LALT, KC_G, COMBO_END};
+
+
 // --
 const uint16_t PROGMEM combo_e_dans_l_a[] = {BP_EACU, BP_A, COMBO_END};
 const uint16_t PROGMEM combo_e_dans_l_o[] = {BP_EACU, BP_O, COMBO_END};
@@ -105,14 +130,14 @@ const uint16_t PROGMEM combo_u_accent[] = {BP_E, BP_U, COMBO_END};
 const uint16_t PROGMEM combo_c_cedille[] = {BP_E, BP_C, COMBO_END};
 
 // --
-const uint16_t PROGMEM combo_ampersand[] = {BP_A, BP_M, COMBO_END};
-const uint16_t PROGMEM us_combo_ampersand[] = {KC_A, KC_M, COMBO_END};
+const uint16_t PROGMEM combo_ampersand[] = {BP_A, BP_P, COMBO_END};
+const uint16_t PROGMEM us_combo_ampersand[] = {KC_A, KC_P, COMBO_END};
 
 const uint16_t PROGMEM combo_at[] = {BP_A, BP_T, COMBO_END};
 const uint16_t PROGMEM us_combo_at[] = {KC_A, KC_T, COMBO_END};
 
-const uint16_t PROGMEM combo_backslash[] = {BP_B, BP_S, BP_L, COMBO_END};
-const uint16_t PROGMEM us_combo_backslash[] = {KC_B, KC_S, BP_L, COMBO_END};
+const uint16_t PROGMEM combo_backslash[] = {BP_D, BP_R, COMBO_END};
+const uint16_t PROGMEM us_combo_backslash[] = {KC_D, KC_R, COMBO_END};
 
 const uint16_t PROGMEM combo_circumflex[] = {BP_C, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_circumflex[] = {KC_C, KC_R, COMBO_END};
@@ -120,8 +145,8 @@ const uint16_t PROGMEM us_combo_circumflex[] = {KC_C, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_colon[] = {BP_C, LT(_ARROWS, BP_DOT), COMBO_END};
 const uint16_t PROGMEM us_combo_colon[] = {KC_C, LT(_US_ARROWS, KC_DOT), COMBO_END};
 
-const uint16_t PROGMEM combo_double_quote[] = {BP_D, RCS_T(BP_QUOT), COMBO_END};
-const uint16_t PROGMEM us_combo_double_quote[] = {KC_D, RCS_T(KC_QUOTE), COMBO_END};
+const uint16_t PROGMEM combo_double_quote[] = {BP_D, BP_QUOT, COMBO_END};
+const uint16_t PROGMEM us_combo_double_quote[] = {KC_D, KC_QUOTE, COMBO_END};
 
 const uint16_t PROGMEM combo_grave[] = {BP_G, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_grave[] = {KC_G, KC_R, COMBO_END};
@@ -132,8 +157,8 @@ const uint16_t PROGMEM us_combo_hash[] = {KC_H, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_pipe[] = {BP_P, BP_E, COMBO_END};
 const uint16_t PROGMEM us_combo_pipe[] = {KC_P, KC_E, COMBO_END};
 
-// const uint16_t PROGMEM combo_semicolon[] = {LT(_ARROWS, BP_DOT), BP_S, COMBO_END};
-// const uint16_t PROGMEM us_combo_semicolon[] = {LT(_US_ARROWS, KC_DOT), KC_S, COMBO_END};
+const uint16_t PROGMEM combo_semicolon[] = {BP_COLN, BP_P, COMBO_END};
+const uint16_t PROGMEM us_combo_semicolon[] = {KC_COLON, KC_P, COMBO_END};
 
 const uint16_t PROGMEM combo_slash[] = {BP_S, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_slash[] = {KC_S, KC_L, COMBO_END};
@@ -179,6 +204,19 @@ combo_t key_combos[] = {
     [ENTER_SHIFTED] = COMBO(combo_enter_shifted, S(KC_ENT)),
     [US_ENTER_SHIFTED] = COMBO(us_combo_enter_shifted, S(KC_ENT)),
 
+    [CONTROL_SHIFT] = COMBO(combo_control_shift, C(S(XXXXXXX))),
+    [US_CONTROL_SHIFT] = COMBO(us_combo_control_shift, C(S(XXXXXXX))),
+
+    [CONTROL_ALT] = COMBO(combo_control_alt, C(A(XXXXXXX))),
+    [US_CONTROL_ALT] = COMBO(us_combo_control_alt, C(A(XXXXXXX))),
+
+    [CONTROL_SHIFT_ALT] = COMBO(combo_control_shift_alt, C(S(A(XXXXXXX)))),
+    [US_CONTROL_SHIFT_ALT] = COMBO(us_combo_control_shift_alt, C(S(A(XXXXXXX)))),
+
+    [RIGHT_ALT] = COMBO(combo_right_alt, KC_RALT),
+    [US_RIGHT_ALT] = COMBO(us_combo_right_alt, KC_RALT),
+
+
     // --
     [E_DANS_L_A] = COMBO(combo_e_dans_l_a, BP_AE),
     [E_DANS_L_O] = COMBO(combo_e_dans_l_o, BP_OE),
@@ -219,8 +257,8 @@ combo_t key_combos[] = {
     [SLASH] = COMBO(combo_slash, BP_SLSH),
     [US_SLASH] = COMBO(us_combo_slash, KC_SLASH),
 
-    // [SEMICOLON] = COMBO(combo_semicolon, BP_SCLN),
-    // [US_SEMICOLON] = COMBO(us_combo_semicolon, KC_SEMICOLON),
+    [SEMICOLON] = COMBO(combo_semicolon, BP_SCLN),
+    [US_SEMICOLON] = COMBO(us_combo_semicolon, KC_SEMICOLON),
 
     [TILDE] = COMBO(combo_tilde, BP_TILD),
     [US_TILDE] = COMBO(us_combo_tilde, KC_TILDE),

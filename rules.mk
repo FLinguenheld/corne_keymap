@@ -10,6 +10,9 @@ AUTO_SHIFT_ENABLE = yes
 # TAP_DANCE_ENABLE = yes
 COMBO_ENABLE = yes
 
+# Recommended for space cadet shift
+COMMAND_ENABLE = no
+
 SEND_STRING_ENABLE = yes
 
 # UNICODE_ENABLE = yes

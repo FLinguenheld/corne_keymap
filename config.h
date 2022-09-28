@@ -5,8 +5,8 @@ This is the c configuration file for the keymap
 #pragma once
 
 /* Select hand configuration */
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -21,6 +21,7 @@ This is the c configuration file for the keymap
 
 #define OLED_BRIGHTNESS 60 // Protect my eyesss
 #define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_MODS_ENABLE
 #define SPLIT_OLED_ENABLE
 
 // Used in the oled_task_user() function, because the OLED_TIMEOUT doesn't work correctly
