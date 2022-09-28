@@ -63,6 +63,8 @@ enum combos {
         US_PIPE,
     SLASH,
         US_SLASH,
+    STAR,
+        US_STAR,
     TILDE,
         US_TILDE,
     TIRET,              // Sorry Elis but it's better than dash
@@ -150,6 +152,9 @@ const uint16_t PROGMEM us_combo_pipe[] = {KC_P, KC_E, COMBO_END};
 
 const uint16_t PROGMEM combo_slash[] = {BP_S, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_slash[] = {KC_S, KC_L, COMBO_END};
+
+const uint16_t PROGMEM combo_star[] = {BP_S, BP_T, COMBO_END};
+const uint16_t PROGMEM us_combo_star[] = {KC_S, KC_T, COMBO_END};
 
 const uint16_t PROGMEM combo_tilde[] = {BP_T, BP_D, COMBO_END};
 const uint16_t PROGMEM us_combo_tilde[] = {KC_T, KC_D, COMBO_END};
@@ -240,6 +245,9 @@ combo_t key_combos[] = {
 
     [SLASH] = COMBO(combo_slash, BP_SLSH),
     [US_SLASH] = COMBO(us_combo_slash, KC_SLASH),
+
+    [STAR] = COMBO(combo_star, BP_ASTR),
+    [US_STAR] = COMBO(us_combo_star, KC_ASTERISK),
 
     [TILDE] = COMBO(combo_tilde, BP_TILD),
     [US_TILDE] = COMBO(us_combo_tilde, KC_TILDE),

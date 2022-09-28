@@ -55,6 +55,15 @@ int is_currently_in_us(void) {
 static uint16_t oled_timer = 0;
 static bool     is_key_processed = true;
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// Macros -----------------------------------------------------------------------------------------------------------------------------------------------
+
+enum custom_macros {
+    UNICODE = SAFE_RANGE,
+    US_UNICODE,
+};
+
+// --
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Restart the timer on all pressed key
@@ -62,6 +71,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         oled_timer = timer_read();
         is_key_processed = true;
+    }
+
+    // Macros
+    switch (keycode) {
+
+        case UNICODE:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                register_code(KC_LSFT);
+                tap_code16(BP_U);
+            }else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+            }
+            break;
+
+        case US_UNICODE:
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                register_code(KC_LSFT);
+                tap_code16(KC_U);
+            }else {
+                unregister_code(KC_LCTL);
+                unregister_code(KC_LSFT);
+            }
+            break;
     }
 
     return true;
@@ -117,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,                 BP_EQL        ,      BP_1      ,      BP_2      ,      BP_3      ,     BP_CIRC    ,       BP_PERC         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+                                                                  XXXXXXX     ,       UNICODE     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 
@@ -199,7 +234,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,                KC_EQL         ,      KC_1      ,      KC_2      ,      KC_3      ,     KC_CIRC    ,      KC_PERCENT       ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
-                                                                  XXXXXXX     ,       XXXXXXX     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
+                                                                  XXXXXXX     ,     US_UNICODE    ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
   ),
 

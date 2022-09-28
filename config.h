@@ -1,12 +1,12 @@
 /*
-This is the c configuration file for the keymap
+    2022
 */
 
 #pragma once
 
 /* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+// #define MASTER_LEFT
+#define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ This is the c configuration file for the keymap
 #undef  OLED_TIMEOUT
 #define OLED_KEY_TIMEOUT 25000
 
-// Auto shift
+// Auto shift ♥
 #define AUTO_SHIFT_TIMEOUT 115
 
 
