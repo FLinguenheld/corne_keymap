@@ -53,14 +53,24 @@ enum combos {
         US_BACKSLASH,
     CIRCUMFLEX,
         US_CIRCUMFLEX,
+    DOLLAR,
+        US_DOLLAR,
     DOUBLE_QUOTE,
         US_DOUBLE_QUOTE,
+    EQUAL,
+        US_EQUAL,
+    EURO,
+
     GRAVE,
         US_GRAVE,
     HASH,
         US_HASH,
     PIPE,
         US_PIPE,
+    PERCENT,
+        US_PERCENT,
+    PLUS,
+        US_PLUS,
     SLASH,
         US_SLASH,
     STAR,
@@ -72,16 +82,14 @@ enum combos {
     UNDERSCORE,
         US_UNDERSCORE,
 
-    DOLLAR,
-        US_DOLLAR,
-    EURO,
-        US_EURO,
-
+    // --
     MAIL_SHORT,
         US_MAIL_SHORT,
     MAIL_LONG,
         US_MAIL_LONG,
 
+    VIM_NOH,
+        US_VIM_NOH,
 
     COMBO_LENGTH, // Just to replace the define in config.h
 };
@@ -138,8 +146,16 @@ const uint16_t PROGMEM us_combo_backslash[] = {KC_D, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_circumflex[] = {BP_C, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_circumflex[] = {KC_C, KC_R, COMBO_END};
 
+const uint16_t PROGMEM combo_dollar[] = {BP_D, BP_L, COMBO_END};
+const uint16_t PROGMEM us_combo_dollar[] = {KC_D, KC_L, COMBO_END};
+
 const uint16_t PROGMEM combo_double_quote[] = {BP_D, BP_QUOT, COMBO_END};
 const uint16_t PROGMEM us_combo_double_quote[] = {KC_D, KC_QUOTE, COMBO_END};
+
+const uint16_t PROGMEM combo_equal[] = {BP_E, BP_Q, COMBO_END};
+const uint16_t PROGMEM us_combo_equal[] = {KC_E, KC_Q, COMBO_END};
+
+const uint16_t PROGMEM combo_euro[] = {BP_E, BP_R, COMBO_END};
 
 const uint16_t PROGMEM combo_grave[] = {BP_G, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_grave[] = {KC_G, KC_R, COMBO_END};
@@ -147,8 +163,14 @@ const uint16_t PROGMEM us_combo_grave[] = {KC_G, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_hash[] = {BP_H, BP_S, COMBO_END};
 const uint16_t PROGMEM us_combo_hash[] = {KC_H, KC_S, COMBO_END};
 
+const uint16_t PROGMEM combo_percent[] = {BP_P, BP_C, COMBO_END};
+const uint16_t PROGMEM us_combo_percent[] = {KC_P, KC_C, COMBO_END};
+
 const uint16_t PROGMEM combo_pipe[] = {BP_P, BP_E, COMBO_END};
 const uint16_t PROGMEM us_combo_pipe[] = {KC_P, KC_E, COMBO_END};
+
+const uint16_t PROGMEM combo_plus[] = {BP_P, BP_L, COMBO_END};
+const uint16_t PROGMEM us_combo_plus[] = {KC_P, KC_L, COMBO_END};
 
 const uint16_t PROGMEM combo_slash[] = {BP_S, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_slash[] = {KC_S, KC_L, COMBO_END};
@@ -165,19 +187,16 @@ const uint16_t PROGMEM us_combo_tiret[] = {KC_T, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_underscore[] = {BP_S, BP_R, COMBO_END};
 const uint16_t PROGMEM us_combo_underscore[] = {KC_S, KC_R, COMBO_END};
 
-// --
-const uint16_t PROGMEM combo_dollar[] = {BP_D, BP_L, COMBO_END};
-const uint16_t PROGMEM us_combo_dollar[] = {KC_D, KC_L, COMBO_END};
-
-const uint16_t PROGMEM combo_euro[] = {BP_E, BP_R, COMBO_END};
-// const uint16_t PROGMEM us_combo_euro[] = {KC_E, KC_U, KC_R, COMBO_END};
 
 // With macros !
 const uint16_t PROGMEM combo_mail_short[] = {BP_M, BP_S, COMBO_END};
-const uint16_t PROGMEM combo_mail_long[] = {BP_M, BP_L, COMBO_END};
-
 const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
+
+const uint16_t PROGMEM combo_mail_long[] = {BP_M, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
+
+const uint16_t PROGMEM combo_vim_noh[] = {BP_S, BP_T, BP_R, COMBO_END};
+const uint16_t PROGMEM us_combo_vim_noh[] = {KC_S, KC_T, KC_R, COMBO_END};
 
 
 // --------------------------------------------------
@@ -234,14 +253,23 @@ combo_t key_combos[] = {
     [DOUBLE_QUOTE] = COMBO(combo_double_quote, BP_DQUO),
     [US_DOUBLE_QUOTE] = COMBO(us_combo_double_quote, KC_DOUBLE_QUOTE),
 
+    [EQUAL] = COMBO(combo_equal, BP_EQL),
+    [US_EQUAL] = COMBO(us_combo_equal, KC_EQUAL),
+
     [GRAVE] = COMBO(combo_grave, BP_GRV),
     [US_GRAVE] = COMBO(us_combo_grave, KC_GRAVE),
 
     [HASH] = COMBO(combo_hash, BP_HASH),
     [US_HASH] = COMBO(us_combo_hash, KC_HASH),
 
+    [PERCENT] = COMBO(combo_percent, BP_PERC),
+    [US_PERCENT] = COMBO(us_combo_percent, KC_PERCENT),
+
     [PIPE] = COMBO(combo_pipe, BP_PIPE),
     [US_PIPE] = COMBO(us_combo_pipe, KC_PIPE),
+
+    [PLUS] = COMBO(combo_plus, BP_PLUS),
+    [US_PLUS] = COMBO(us_combo_plus, KC_PLUS),
 
     [SLASH] = COMBO(combo_slash, BP_SLSH),
     [US_SLASH] = COMBO(us_combo_slash, KC_SLASH),
@@ -271,6 +299,9 @@ combo_t key_combos[] = {
 
     [US_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
     [US_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
+
+    [VIM_NOH] = COMBO_ACTION(combo_vim_noh),
+    [US_VIM_NOH] = COMBO_ACTION(us_combo_vim_noh),
 };
 
 
@@ -313,13 +344,26 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       // }
       // break;
 
-    // case BSPC_LSFT_CLEAR:
-      // if (pressed) {
-        // tap_code16(KC_END);
-        // tap_code16(S(KC_HOME));
-        // tap_code16(KC_BSPC);
-      // }
-      // break;
+    case VIM_NOH:
+      if (pressed) {
+        tap_code16(KC_ESC);
+        tap_code16(BP_COLN);
+        tap_code16(BP_N);
+        tap_code16(BP_O);
+        tap_code16(BP_H);
+        tap_code16(KC_ENTER);
+      }
+      break;
 
+    case US_VIM_NOH:
+      if (pressed) {
+        tap_code16(KC_ESC);
+        tap_code16(KC_COLON);
+        tap_code16(KC_N);
+        tap_code16(KC_O);
+        tap_code16(KC_H);
+        tap_code16(KC_ENTER);
+      }
+      break;
   }
 }

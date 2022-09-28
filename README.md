@@ -48,16 +48,21 @@ Or outside the folder :
 |   c + r          |   ^                    |
 |   d + '          |   "                    |
 |   g + r          |   `                    |
+|   d + l          |   $                    |
+|   e + r          |   €  (bépo)            |
 |   h + s          |   #                    |
 |   a + p          |   &                    |
 |   p + e          |   pipe                 |
 |   s + b          |   /                    |
 |   d + r          |   \                    |
 |   t + d          |   ~                    |
-|   t + r          |   -                    |
 |   s + r          |   _                    |
-|   d + l          |   $                    |
-|   e + r          |   €                    |
+|   t + r          |   -                    |
+|   p + l          |   +                    |
+|   e + q          |   =                    |
+|   p + c          |   %                    |
+|   s + t          |   *                    |
+|   s + t + r      |   :noh                 |
 |   enter + s      |   shifted enter        |
 
 #### Layouts
