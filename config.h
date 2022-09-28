@@ -53,7 +53,7 @@ This is the c configuration file for the keymap
 #define MK_C_OFFSET_1 4
 #define MK_C_INTERVAL_1 18
 
-#define MK_C_OFFSET_UNMOD 12
+#define MK_C_OFFSET_UNMOD 13
 #define MK_C_INTERVAL_UNMOD 17
 
 #define MK_C_OFFSET_2 27

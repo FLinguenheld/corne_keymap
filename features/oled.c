@@ -47,6 +47,7 @@ void oled_display(void) {
         }
 
 
+    // Layer name
     if (get_highest_layer(layer_state) != _BASE && get_highest_layer(layer_state) != _US_BASE){
 
         // US banner

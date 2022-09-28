@@ -103,9 +103,7 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
 
         case KC_BSPC:
-
         case BP_EXLM:
-        case BP_PERC:
 
         // US
         case KC_EXLM: // !
@@ -126,9 +124,6 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
 
         case BP_EXLM:
             register_code16((!shifted) ? BP_EXLM : BP_QUES);
-            break;
-        case BP_PERC:
-            register_code16((!shifted) ? BP_PERC : ALGR(BP_PERC));
             break;
 
         // US
@@ -154,9 +149,6 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
 
         case BP_EXLM:
             unregister_code16((!shifted) ? BP_EXLM : BP_QUES);
-            break;
-        case BP_PERC:
-            unregister_code16((!shifted) ? BP_PERC : ALGR(BP_PERC));
             break;
 
         // US
