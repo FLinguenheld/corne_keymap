@@ -88,9 +88,6 @@ enum combos {
     MAIL_LONG,
         US_MAIL_LONG,
 
-    VIM_NOH,
-        US_VIM_NOH,
-
     COMBO_LENGTH, // Just to replace the define in config.h
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -195,9 +192,6 @@ const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_mail_long[] = {BP_M, BP_L, COMBO_END};
 const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
 
-const uint16_t PROGMEM combo_vim_noh[] = {BP_S, BP_T, BP_R, COMBO_END};
-const uint16_t PROGMEM us_combo_vim_noh[] = {KC_S, KC_T, KC_R, COMBO_END};
-
 
 // --------------------------------------------------
 // --------------------------------------------------
@@ -299,9 +293,6 @@ combo_t key_combos[] = {
 
     [US_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
     [US_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
-
-    [VIM_NOH] = COMBO_ACTION(combo_vim_noh),
-    [US_VIM_NOH] = COMBO_ACTION(us_combo_vim_noh),
 };
 
 
@@ -344,26 +335,15 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       // }
       // break;
 
-    case VIM_NOH:
-      if (pressed) {
-        tap_code16(KC_ESC);
-        tap_code16(BP_COLN);
-        tap_code16(BP_N);
-        tap_code16(BP_O);
-        tap_code16(BP_H);
-        tap_code16(KC_ENTER);
-      }
-      break;
-
-    case US_VIM_NOH:
-      if (pressed) {
-        tap_code16(KC_ESC);
-        tap_code16(KC_COLON);
-        tap_code16(KC_N);
-        tap_code16(KC_O);
-        tap_code16(KC_H);
-        tap_code16(KC_ENTER);
-      }
-      break;
+    // case VIM_NOH:
+      // if (pressed) {
+        // tap_code16(KC_ESC);
+        // tap_code16(BP_COLN);
+        // tap_code16(BP_N);
+        // tap_code16(BP_O);
+        // tap_code16(BP_H);
+        // tap_code16(KC_ENTER);
+      // }
+      // break;
   }
 }

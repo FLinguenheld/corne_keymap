@@ -53,7 +53,7 @@ Or outside the folder :
 |   h + s          |   #                    |
 |   a + p          |   &                    |
 |   p + e          |   pipe                 |
-|   s + b          |   /                    |
+|   s + l          |   /                    |
 |   d + r          |   \                    |
 |   t + d          |   ~                    |
 |   s + r          |   _                    |
@@ -62,7 +62,6 @@ Or outside the folder :
 |   e + q          |   =                    |
 |   p + c          |   %                    |
 |   s + t          |   *                    |
-|   s + t + r      |   :noh                 |
 |   enter + s      |   shifted enter        |
 
 #### Layouts
