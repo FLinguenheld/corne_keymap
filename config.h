@@ -5,8 +5,8 @@
 #pragma once
 
 /* Select hand configuration */
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 
 // --------------------------------------------------------------------------------
@@ -54,19 +54,20 @@
 #define MK_C_INTERVAL_1 18
 
 #define MK_C_OFFSET_UNMOD 13
-#define MK_C_INTERVAL_UNMOD 17
+#define MK_C_INTERVAL_UNMOD 15
 
-#define MK_C_OFFSET_2 27
-#define MK_C_INTERVAL_2 15
+#define MK_C_OFFSET_2 25
+#define MK_C_INTERVAL_2 10
 
-#define MK_W_OFFSET_UNMOD 3
-#define MK_W_INTERVAL_UNMOD 80
 
 #define MK_W_OFFSET_0 1
-#define MK_W_INTERVAL_0 300
+#define MK_W_INTERVAL_0 160
 
-#define MK_W_OFFSET_1 4
-#define MK_W_INTERVAL_1 200
+#define MK_W_OFFSET_1 2
+#define MK_W_INTERVAL_1 120
 
-#define MK_W_OFFSET_2 5
+#define MK_W_OFFSET_UNMOD 2
+#define MK_W_INTERVAL_UNMOD 70
+
+#define MK_W_OFFSET_2 10
 #define MK_W_INTERVAL_2 30
