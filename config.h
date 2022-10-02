@@ -71,3 +71,7 @@
 
 #define MK_W_OFFSET_2 10
 #define MK_W_INTERVAL_2 30
+
+
+
+#define UNICODE_SELECTED_MODES UC_LNX

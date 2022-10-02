@@ -31,6 +31,14 @@ Or outside the folder :
 [qmk](https://docs.qmk.fm/#/)  
 [foostan](https://github.com/foostan/crkbd)
 
+
+#### Keymap
+
+Put the us-intl keymap :
+
+    setxkbmap -layout us -variant intl
+
+
 #### Combos
 
 |      keys        |                        |

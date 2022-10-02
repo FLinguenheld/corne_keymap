@@ -6,88 +6,43 @@
 
 bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 
-    // if (IS_LAYER_ON(_BASE)) {
-    if (!is_currently_in_us()) {
-
-        switch (keycode) {
-            case BP_A:
-            case BP_B:
-            case BP_C:
-            case BP_D:
-            case BP_E:
-            case BP_F:
-            case BP_G:
-            case BP_H:
-            case BP_I:
-            case BP_J:
-            case BP_K:
-            case BP_L:
-            case BP_M:
-            case BP_N:
-            case BP_O:
-            case BP_P:
-            case BP_Q:
-            case BP_R:
-            case BP_S:
-            case BP_T:
-            case BP_U:
-            case BP_V:
-            case BP_W:
-            case BP_X:
-            case BP_Y:
-            case BP_Z:
-
-            case BP_EACU: // É
-            case BP_EGRV: // È
-            case BP_ECIR: // Ê
-
-            case BP_CCED: // Ç
-            case BP_AGRV: // À
-            case BP_UGRV: // Ù
-
-            case BP_OE: // Œ
-            case BP_AE: // Æ
-
-                return true;
-        }
-    }
-    else {
-        
-        switch (keycode) {
-            case KC_A:
-            case KC_B:
-            case KC_C:
-            case KC_D:
-            case KC_E:
-            case KC_F:
-            case KC_G:
-            case KC_H:
-            case KC_I:
-            case KC_J:
-            case KC_K:
-            case KC_L:
-            case KC_M:
-            case KC_N:
-            case KC_O:
-            case KC_P:
-            case KC_Q:
-            case KC_R:
-            case KC_S:
-            case KC_T:
-            case KC_U:
-            case KC_V:
-            case KC_W:
-            case KC_X:
-            case KC_Y:
-            case KC_Z:
-
-                return true;
-        }
-    }
-
     switch (keycode) {
+
         case KC_TAB:
         case KC_ENT:
+
+        // --
+        case KC_A:
+        case KC_B:
+        case KC_C:
+        case KC_D:
+        case KC_E:
+        case KC_F:
+        case KC_G:
+        case KC_H:
+        case KC_I:
+        case KC_J:
+        case KC_K:
+        case KC_L:
+        case KC_M:
+        case KC_N:
+        case KC_O:
+        case KC_P:
+        case KC_Q:
+        case KC_R:
+        case KC_S:
+        case KC_T:
+        case KC_U:
+        case KC_V:
+        case KC_W:
+        case KC_X:
+        case KC_Y:
+        case KC_Z:
+
+        // Need US international --
+        case US_EACU: // É
+        case US_AE: // Æ
+
             return true;
     }
     
@@ -103,10 +58,16 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
 
         case KC_BSPC:
-        case BP_EXLM:
+        case KC_EXLM:
 
-        // US
-        case KC_EXLM: // !
+        // French
+        case CS_EACUTE:
+        case CS_AGRAVE:
+        case CS_EGRAVE:
+        case CS_UGRAVE:
+        case CS_CCEDILLE:
+        case CS_AE:
+        case CS_OE:
 
             return true;
 
@@ -122,13 +83,38 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             register_code16((!shifted) ? KC_BSPC : KC_DEL);
             break;
 
-        case BP_EXLM:
-            register_code16((!shifted) ? BP_EXLM : BP_QUES);
-            break;
-
-        // US
         case KC_EXLM: // ! ?
             register_code16((!shifted) ? KC_EXLM : KC_QUES);
+            break;
+
+        // French
+        case CS_EACUTE:
+            if (shifted) { send_unicode_string("É"); }
+            else         { send_unicode_string("é"); }
+            break;
+        case CS_AGRAVE:
+            if (shifted) { send_unicode_string("À"); }
+            else         { send_unicode_string("à"); }
+            break;
+        case CS_EGRAVE:
+            if (shifted) { send_unicode_string("È"); }
+            else         { send_unicode_string("è"); }
+            break;
+        case CS_UGRAVE:
+            if (shifted) { send_unicode_string("Ù"); }
+            else         { send_unicode_string("ù"); }
+            break;
+        case CS_CCEDILLE:
+            if (shifted) { send_unicode_string("Ç"); }
+            else         { send_unicode_string("ç"); }
+            break;
+        case CS_AE:
+            if (shifted) { send_unicode_string("Æ"); }
+            else         { send_unicode_string("æ"); }
+            break;
+        case CS_OE:
+            if (shifted) { send_unicode_string("Œ"); }
+            else         { send_unicode_string("œ"); }
             break;
 
         default:
@@ -147,14 +133,10 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             unregister_code16((!shifted) ? KC_BSPC : KC_DEL);
             break;
 
-        case BP_EXLM:
-            unregister_code16((!shifted) ? BP_EXLM : BP_QUES);
-            break;
-
-        // US
         case KC_EXLM:
             unregister_code16((!shifted) ? KC_EXLM : KC_QUES);
             break;
+
 
         default:
             // & 0xFF gets the Tap key for Tap Holds, required when using Retro Shift

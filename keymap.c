@@ -8,8 +8,110 @@ https://docs.qmk.fm/#/
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
-#include <keymap_bepo.h>
+#include <keymap_us_international.h>
+// #include <keymap_us_extended.h>
+// #include <keymap_bepo.h>
 // https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_extras/keymap_bepo.h
+
+#include <stdio.h>
+
+enum custom_keys {
+
+    TEST,
+    
+};
+
+
+// // French chars
+// enum unicode_names {
+  // E_AIG,
+  // E_AIG_MAJ,
+  // E_GRV,
+  // E_GRV_MAJ,
+  // E_CIRC,
+  // E_CIRC_MAJ,
+  // E_TREMA,
+  // E_TREMA_MAJ,
+  // A_CIRC,
+  // A_CIRC_MAJ,
+  // A_GRV,
+  // A_GRV_MAJ,
+  // C_CEDILLE,
+  // C_CEDILLE_MAJ,
+  // CARRE,
+  // CUBE,
+  // EURO,
+  // BAHT,
+  // COPYRIGHT,
+  // REGISTERED,
+  // OMEGA,
+  // OMEGA_MAJ,
+  // O_CIRC,
+  // O_CIRC_MAJ,
+  // U_GRAV,
+  // U_GRAV_MAJ,
+  // OE,
+  // OE_MAJ,
+  // PI,
+  // DEGREE,
+  // N_TILDE,
+  // N_TILDE_MAJ,
+  // MICRO,
+  // SIGMA,
+  // INFEQ,
+  // SUPEQ,
+  // GUILL_G,
+  // GUILL_R,
+  // UNEQUAL,
+  // PRETTYMUCH,
+  // INFINIT,
+// };
+
+
+// const uint32_t PROGMEM unicode_map[] = {
+  // [E_AIG]  = 0x00E9,  // 0 é
+  // [E_AIG_MAJ] = 0x00C9,  // 1 É
+  // [E_GRV]  = 0x00E8,  // 2 è
+  // [E_GRV_MAJ] = 0x00C8,  // 3 È
+  // [E_CIRC]  = 0x00EA,  // 4 ê
+  // [E_CIRC_MAJ] = 0x00CA,  // 5 Ê
+  // [E_TREMA]  = 0x00EB,  // 6 ë
+  // [E_TREMA_MAJ] = 0x00CB,  // 7 Ë
+  // [A_CIRC]  = 0x00E2,  // 8 â
+  // [A_CIRC_MAJ] = 0x00C2,  // 9 Ê
+  // [A_GRV]  = 0x00E0,  // 10 Â
+  // [A_GRV_MAJ] = 0x00C0,  // 11 À
+  // [C_CEDILLE]  = 0x00E7,  // 12 ç
+  // [C_CEDILLE_MAJ] = 0x00C7,  // 13 Ç
+  // [CARRE]  = 0x00B2,  // 14 ²
+  // [CUBE] = 0x00B3,  // 15 ³
+  // [EURO]  = 0x20AC,  // 16 €
+  // [BAHT] = 0x0E3F,  // 17 ฿
+  // [COPYRIGHT]  = 0x00A9,  // 18 ©
+  // [REGISTERED] = 0x00AE,  // 19 ®
+  // [OMEGA]  = 0x03C9,  // 20 ω
+  // [OMEGA_MAJ] = 0x03A9,  // 21 Ω
+  // [O_CIRC]  = 0x00F4,  // 22 ô
+  // [O_CIRC_MAJ] = 0x00D4,  // 23 Ô
+  // [U_GRAV]  = 0x00F9,  // 24 ù
+  // [U_GRAV_MAJ] = 0x00D9,  // 25 Ù
+  // [OE]  = 0x0153,  // 26 œ
+  // [OE_MAJ] = 0x0152,  // 27 Œ
+  // [PI] = 0x03C0, // 28 π
+  // [DEGREE] = 0x00B0, // 29 °
+  // [N_TILDE]  = 0x00F1,  // 30 ñ
+  // [N_TILDE_MAJ] = 0x00D1,  // 31 Ñ
+  // [MICRO]  = 0x00B5,  // 32 µ
+  // [SIGMA] = 0x03C3,  // 33 σ
+  // [INFEQ]  = 0x2264,  // 34 ≤
+  // [SUPEQ] = 0x2265,  // 35 ≥
+  // [GUILL_G]  = 0x00AB,  // 36 «
+  // [GUILL_R] = 0x00BB,  // 37 »
+  // [UNEQUAL]  = 0x2260,  // 38 ≠
+  // [PRETTYMUCH] = 0x2248,  // 39 ≈
+  // [INFINIT] = 0x221E,  // 40 ∞
+// };
+
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,6 +163,15 @@ static bool     is_key_processed = true;
 enum custom_macros {
     UNICODE = SAFE_RANGE,
     US_UNICODE,
+
+    CS_EACUTE,
+    CS_AGRAVE,
+    CS_EGRAVE,
+    CS_UGRAVE,
+    CS_CCEDILLE,
+    CS_AE,
+    CS_OE,
+
 };
 
 // --
@@ -76,11 +187,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Macros
     switch (keycode) {
 
+
+
         case UNICODE:
             if (record->event.pressed) {
                 register_code(KC_LCTL);
                 register_code(KC_LSFT);
-                tap_code16(BP_U);
+                tap_code16(KC_U);
             }else {
                 unregister_code(KC_LCTL);
                 unregister_code(KC_LSFT);
@@ -99,6 +212,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
 
+
     return true;
 }
 
@@ -108,7 +222,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // #include "features/tap_dance.c"
 #include "features/auto_shift.c"
 #include "features/combo.c"
-#include "features/oled.c"
+// #include "features/oled.c"
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Layouts ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -132,24 +246,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BASE] = LAYOUT_split_3x6_3(
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      KC_TAB                ,     BP_J       ,    BP_EACU     ,     BP_P       ,     BP_O       ,        BP_Z           ,                 BP_K          ,      BP_V      ,      BP_D      ,      BP_L      ,      BP_M      ,       KC_BSPC         ,
+      KC_TAB                ,     KC_J       ,   CS_EACUTE    ,     KC_P       ,     KC_O       ,        KC_Z           ,                 KC_K          ,      KC_V      ,      KC_D      ,      KC_L      ,      KC_M      ,       KC_BSPC         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      GUI_T(KC_ESC)         ,     BP_A       ,     BP_U       ,     BP_I       ,     BP_E       ,       BP_EXLM         ,                 BP_C          ,      BP_T      ,      BP_S      ,      BP_R      ,      BP_N      ,       BP_QUOT         ,
+      GUI_T(KC_ESC)         ,     KC_A       ,     KC_U       ,     KC_I       ,     KC_E       ,       KC_EXLM         ,                 KC_C          ,      KC_T      ,      KC_S      ,      KC_R      ,      KC_N      ,       KC_QUOTE        ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-      KC_LAPO               ,     BP_B       ,     BP_Y       ,     BP_X       ,     BP_W       ,       BP_LABK         ,                BP_RABK        ,      BP_Q      ,      BP_G      ,      BP_H      ,      BP_F      ,       KC_RSPC         ,
+      KC_LAPO               ,     KC_B       ,     KC_Y       ,     KC_X       ,     KC_W       ,       KC_LABK         ,                KC_RABK        ,      KC_Q      ,      KC_G      ,      KC_H      ,      KC_F      ,       KC_RSPC         ,
   //|---/* ALT ¨ */---------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+------/* SFT ^ */------|
   //                                                |----------------------+----------------------+-----------------------|   |-----------------------+----------------------+----------------------|
-                                                            BP_SCLN        , LT(_MOUSE, BP_COMM)  ,        KC_LCPO        ,      LT(_NUMERIC, KC_ENT) , LT(_ARROWS, BP_DOT)  ,     BP_COLN
+                                                            KC_SCLN        , LT(_MOUSE, KC_COMM)  ,        KC_LCPO        ,      LT(_NUMERIC, KC_ENT) , LT(_ARROWS, KC_DOT)  ,     KC_COLN
   //                                                |----------------------+----------------------+----/* Space ctl */----|   |-----------------------+----------------------+----------------------|
   ),
 
   [_NUMERIC] = LAYOUT_split_3x6_3(
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     BP_RCBR    ,     BP_RBRC    ,    BP_RPRN     ,        XXXXXXX        ,                BP_COMM        ,      BP_7      ,      BP_8      ,      BP_9      ,     BP_PLUS    ,       BP_MINS         ,
+            _______         ,     XXXXXXX    ,     KC_RCBR    ,     KC_RBRC    ,    KC_RPRN     ,        XXXXXXX        ,                KC_COMM        ,      KC_7      ,      KC_8      ,      KC_9      ,     KC_PLUS    ,       KC_MINS         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     BP_LCBR    ,     BP_LBRC    ,    BP_LPRN     ,        XXXXXXX        ,                  BP_0         ,      BP_4      ,      BP_5      ,      BP_6      ,     BP_ASTR    ,       BP_SLSH         ,
+            _______         ,     XXXXXXX    ,     KC_LCBR    ,     KC_LBRC    ,    KC_LPRN     ,        XXXXXXX        ,                  KC_0         ,      KC_4      ,      KC_5      ,      KC_6      ,     KC_ASTR    ,       KC_SLSH         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,                 BP_EQL        ,      BP_1      ,      BP_2      ,      BP_3      ,     BP_CIRC    ,       BP_PERC         ,
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,    XXXXXXX     ,        XXXXXXX        ,                 KC_EQL        ,      KC_1      ,      KC_2      ,      KC_3      ,     KC_CIRC    ,       KC_PERC         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                                   XXXXXXX     ,       UNICODE     ,         XXXXXXX       ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
@@ -175,7 +289,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
             _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,        XXXXXXX        ,               XXXXXXX         ,    KC_LEFT     ,    KC_DOWN     ,     KC_UP      ,    KC_RIGHT    ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
-            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(BP_D)     ,    C(BP_U)     ,    XXXXXXX     ,       _______         ,
+            _______         ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,     XXXXXXX    ,        XXXXXXX        ,               XXXXXXX         ,    XXXXXXX     ,    C(KC_D)     ,    C(KC_U)     ,    XXXXXXX     ,       _______         ,
   //|-----------------------+----------------+----------------+----------------+----------------+-----------------------|       |-----------------------+----------------+----------------+----------------+----------------+-----------------------|
   //                                                      |-------------------+-------------------+-----------------------|   |-----------------------+-------------------+-------------------|
                                                                  XXXXXXX      ,     XXXXXXX       ,        _______        ,          XXXXXXX          ,     XXXXXXX       ,      XXXXXXX
