@@ -14,16 +14,26 @@
 enum combos {
 
     LAYER_ADJUST,
-    LAYER_FN_OSL,
+    LAYER_FN,
 
     // French
-    A_ACCENT,
-    E_ACCENT,
-    U_ACCENT,
-    C_CEDILLE,
+    A_GRAVE,
+    E_GRAVE,
+    U_GRAVE,
+    C_CEDILLA,
 
-    E_DANS_L_A,
-    E_DANS_L_O,
+    E_A,
+    E_O,
+
+    A_CIRCUMFLEX,
+    E_CIRCUMFLEX,
+    I_CIRCUMFLEX,
+    O_CIRCUMFLEX,
+    U_CIRCUMFLEX,
+    E_DIAERESIS,
+    I_DIAERESIS,
+    U_DIAERESIS,
+    Y_DIAERESIS,
 
     // --
     ENTER_SHIFTED,
@@ -37,10 +47,8 @@ enum combos {
     AT,
     BACKSLASH,
     CIRCUMFLEX,
-    DOLLAR,
     DOUBLE_QUOTE,
     EQUAL,
-    EURO,
 
     GRAVE,
     HASH,
@@ -52,6 +60,10 @@ enum combos {
     TILDE,
     TIRET,              // Sorry Elis but it's better than dash
     UNDERSCORE,
+
+    DOLLAR,
+    EURO,
+    POUND,
 
     // --
     // MAIL_SHORT,
@@ -76,26 +88,34 @@ const uint16_t PROGMEM combo_enter_shifted[] = {LT(_NUMERIC, KC_ENT), KC_S, COMB
 const uint16_t PROGMEM combo_control_shift[] = {KC_LCPO, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_control_alt[] = {KC_LCPO, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_control_shift_alt[] = {KC_LCPO, KC_S, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_right_alt[] = {KC_LAPO, KC_G, COMBO_END};
+const uint16_t PROGMEM combo_right_alt[] = {KC_LALT, KC_G, COMBO_END};
 
 // --
-const uint16_t PROGMEM combo_a_accent[] = {KC_E, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_e_accent[] = {CS_EACUTE, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_u_accent[] = {KC_E, KC_U, COMBO_END};
-const uint16_t PROGMEM combo_c_cedille[] = {KC_E, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_a_grave[] = {KC_E, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_e_grave[] = {CS_EACUTE, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_u_grave[] = {KC_E, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_c_cedilla[] = {KC_E, KC_C, COMBO_END};
 
-const uint16_t PROGMEM combo_e_dans_l_a[] = {CS_EACUTE, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_e_dans_l_o[] = {CS_EACUTE, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_ea[] = {CS_EACUTE, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_eo[] = {CS_EACUTE, KC_O, COMBO_END};
+
+const uint16_t PROGMEM combo_a_circumflex[] = {KC_C, KC_R, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_e_circumflex[] = {KC_C, KC_R, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_i_circumflex[] = {KC_C, KC_R, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_o_circumflex[] = {KC_C, KC_R, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_u_circumflex[] = {KC_C, KC_R, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_e_diaeresis[] = {KC_T, KC_R, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_i_diaeresis[] = {KC_T, KC_R, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_u_diaeresis[] = {KC_T, KC_R, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_y_diaeresis[] = {KC_T, KC_R, KC_Y, COMBO_END};
 
 // --
 const uint16_t PROGMEM combo_ampersand[] = {KC_A, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_at[] = {KC_A, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backslash[] = {KC_D, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_circumflex[] = {KC_C, KC_R, COMBO_END};
-const uint16_t PROGMEM combo_dollar[] = {KC_D, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_double_quote[] = {KC_D, KC_QUOT, COMBO_END};
 const uint16_t PROGMEM combo_equal[] = {KC_E, KC_Q, COMBO_END};
-const uint16_t PROGMEM combo_euro[] = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_grave[] = {KC_G, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_hash[] = {KC_H, KC_S, COMBO_END};
 const uint16_t PROGMEM combo_percent[] = {KC_P, KC_C, COMBO_END};
@@ -107,6 +127,10 @@ const uint16_t PROGMEM combo_tilde[] = {KC_T, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_tiret[] = {KC_T, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_underscore[] = {KC_S, KC_R, COMBO_END};
 
+// --
+const uint16_t PROGMEM combo_dollar[] = {KC_D, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_euro[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM combo_pound[] = {KC_P, KC_D, COMBO_END};
 
 // With macros !
 // const uint16_t PROGMEM combo_mail_short[] = {KC_M, KC_S, COMBO_END};
@@ -122,7 +146,7 @@ const uint16_t PROGMEM combo_underscore[] = {KC_S, KC_R, COMBO_END};
 combo_t key_combos[] = {
 
     [LAYER_ADJUST] = COMBO(combo_adjust, MO(_ADJUST)),
-    [LAYER_FN_OSL] = COMBO(combo_fn_osl, OSL(_FN)),
+    [LAYER_FN] = COMBO(combo_fn_osl, MO(_FN)),
 
     // --
     [ENTER_SHIFTED] = COMBO(combo_enter_shifted, S(KC_ENT)),
@@ -132,19 +156,31 @@ combo_t key_combos[] = {
     [RIGHT_ALT] = COMBO(combo_right_alt, KC_RALT),
 
     // French
-    [A_ACCENT] = COMBO(combo_a_accent, CS_AGRAVE),
-    [E_ACCENT] = COMBO(combo_e_accent, CS_EGRAVE),
-    [U_ACCENT] = COMBO(combo_u_accent, CS_UGRAVE),
-    [C_CEDILLE] = COMBO(combo_c_cedille, CS_CCEDILLE),
+    [A_GRAVE] = COMBO(combo_a_grave, CS_AGRAVE),
+    [E_GRAVE] = COMBO(combo_e_grave, CS_EGRAVE),
+    [U_GRAVE] = COMBO(combo_u_grave, CS_UGRAVE),
+    [C_CEDILLA] = COMBO(combo_c_cedilla, CS_CCEDILLA),
 
-    [E_DANS_L_A] = COMBO(combo_e_dans_l_a, CS_AE),
-    [E_DANS_L_O] = COMBO(combo_e_dans_l_o, CS_OE),
+    [E_A] = COMBO(combo_ea, CS_AE),
+    [E_O] = COMBO(combo_eo, CS_OE),
+
+    [A_CIRCUMFLEX] = COMBO(combo_a_circumflex, CS_ACIRCUMFLEX),
+    [E_CIRCUMFLEX] = COMBO(combo_e_circumflex, CS_ECIRCUMFLEX),
+    [I_CIRCUMFLEX] = COMBO(combo_i_circumflex, CS_ICIRCUMFLEX),
+    [O_CIRCUMFLEX] = COMBO(combo_o_circumflex, CS_OCIRCUMFLEX),
+    [U_CIRCUMFLEX] = COMBO(combo_u_circumflex, CS_UCIRCUMFLEX),
+
+    [E_DIAERESIS] = COMBO(combo_e_diaeresis, CS_EDIAERESIS),
+    [I_DIAERESIS] = COMBO(combo_i_diaeresis, CS_IDIAERESIS),
+    [U_DIAERESIS] = COMBO(combo_u_diaeresis, CS_UDIAERESIS),
+    [Y_DIAERESIS] = COMBO(combo_y_diaeresis, CS_YDIAERESIS),
 
     // --
     [AMPERSAND] = COMBO(combo_ampersand, KC_AMPR),
 
     [AT] = COMBO(combo_at, KC_AT),
     [BACKSLASH] = COMBO(combo_backslash, KC_BSLS),
+    [CIRCUMFLEX] = COMBO(combo_circumflex, KC_CIRC),
     [DOUBLE_QUOTE] = COMBO(combo_double_quote, KC_DQUO),
     [EQUAL] = COMBO(combo_equal, KC_EQL),
     [GRAVE] = COMBO(combo_grave, KC_GRV),
@@ -157,9 +193,11 @@ combo_t key_combos[] = {
     [TILDE] = COMBO(combo_tilde, KC_TILD),
     [TIRET] = COMBO(combo_tiret, KC_MINS),
     [UNDERSCORE] = COMBO(combo_underscore, KC_UNDS),
+
     // --
     [DOLLAR] = COMBO(combo_dollar, KC_DLR),
-    [EURO] = COMBO(combo_euro, US_EURO),
+    [EURO] = COMBO(combo_euro, CS_EURO),
+    [POUND] = COMBO(combo_pound, CS_POUND),
 
     // --
     // [MAIL_SHORT] = COMBO_ACTION(combo_mail_short),
@@ -188,21 +226,9 @@ combo_t key_combos[] = {
       // // }
       // // break;
 
-    // // case KC_MAIL_SHORT:
-      // // if (pressed) {
-        // // SEND_STRING("f@linguenheld.fr");
-      // // }
-      // // break;
-
     // // case MAIL_LONG:
       // // if (pressed) {
         // // SEND_STRING("/orlf;j6od;,sf;.foiv/l");
-      // // }
-      // // break;
-
-    // // case KC_MAIL_LONG:
-      // // if (pressed) {
-        // // SEND_STRING("florent@linguenheld.fr");
       // // }
       // // break;
 

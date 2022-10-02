@@ -31,16 +31,16 @@
 // Auto shift ♥
 #define AUTO_SHIFT_TIMEOUT 115
 
-
-// Redefine ALT + ¨  -  SHITF + ^  -  CTRL + space
+// Redefine CTRL + space
 // The equivalent TD(ALT, TREMA) doesn't work
 // See space cadet shift
-#define LAPO_KEYS KC_LALT, KC_RALT, KC_D
-#define RSPC_KEYS KC_RSFT, KC_TRNS, KC_Y
 #define LCPO_KEYS KC_LCTL, KC_TRNS, KC_SPC
 
 // Unicode
-// #define UNICODE_SELECTED_MODES UC_LNX
+#define UNICODE_SELECTED_MODES UC_LNX
+
+// One shot deactivated (allows to save 700 ko)
+#define NO_ACTION_ONESHOT
 
 // Mouse
 #define MK_3_SPEED
@@ -66,12 +66,8 @@
 #define MK_W_OFFSET_1 2
 #define MK_W_INTERVAL_1 120
 
-#define MK_W_OFFSET_UNMOD 2
+#define MK_W_OFFSET_UNMOD 4
 #define MK_W_INTERVAL_UNMOD 70
 
 #define MK_W_OFFSET_2 10
 #define MK_W_INTERVAL_2 30
-
-
-
-#define UNICODE_SELECTED_MODES UC_LNX

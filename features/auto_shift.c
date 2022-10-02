@@ -1,8 +1,8 @@
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // Auto shift -------------------------------------------------------------------------------------------------------------------------------------------
 
-// Only for letters and on basis layers
-// Exceptions like Tab underneath
+// Only for basis letters
+// Exceptions like Tab or Enter
 
 bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 
@@ -39,10 +39,6 @@ bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
         case KC_Y:
         case KC_Z:
 
-        // Need US international --
-        case US_EACU: // É
-        case US_AE: // Æ
-
             return true;
     }
     
@@ -53,7 +49,8 @@ bool get_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
 // ----------------------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------------------
 // Custom auto shift
-// I use this instead of tap dance because the double tap is horrible
+// I use this instead of tap dance because double tap is horrible
+// Add here the letter or the custom enum, then add in press_user and press_release the actions
 bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
 
@@ -65,9 +62,19 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
         case CS_AGRAVE:
         case CS_EGRAVE:
         case CS_UGRAVE:
-        case CS_CCEDILLE:
+        case CS_CCEDILLA:
         case CS_AE:
         case CS_OE:
+
+        case CS_ACIRCUMFLEX:
+        case CS_ECIRCUMFLEX:
+        case CS_ICIRCUMFLEX:
+        case CS_OCIRCUMFLEX:
+        case CS_UCIRCUMFLEX:
+        case CS_EDIAERESIS:
+        case CS_IDIAERESIS:
+        case CS_UDIAERESIS:
+        case CS_YDIAERESIS:
 
             return true;
 
@@ -88,34 +95,59 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             break;
 
         // French
+        // Release is not necessary with 'send_unicode_string()'
         case CS_EACUTE:
             if (shifted) { send_unicode_string("É"); }
-            else         { send_unicode_string("é"); }
-            break;
+            else         { send_unicode_string("é"); } break;
         case CS_AGRAVE:
             if (shifted) { send_unicode_string("À"); }
-            else         { send_unicode_string("à"); }
-            break;
+            else         { send_unicode_string("à"); } break;
         case CS_EGRAVE:
             if (shifted) { send_unicode_string("È"); }
-            else         { send_unicode_string("è"); }
-            break;
+            else         { send_unicode_string("è"); } break;
         case CS_UGRAVE:
             if (shifted) { send_unicode_string("Ù"); }
-            else         { send_unicode_string("ù"); }
-            break;
-        case CS_CCEDILLE:
+            else         { send_unicode_string("ù"); } break;
+        case CS_CCEDILLA:
             if (shifted) { send_unicode_string("Ç"); }
-            else         { send_unicode_string("ç"); }
-            break;
+            else         { send_unicode_string("ç"); } break;
+
         case CS_AE:
             if (shifted) { send_unicode_string("Æ"); }
-            else         { send_unicode_string("æ"); }
-            break;
+            else         { send_unicode_string("æ"); } break;
         case CS_OE:
             if (shifted) { send_unicode_string("Œ"); }
-            else         { send_unicode_string("œ"); }
-            break;
+            else         { send_unicode_string("œ"); } break;
+
+        case CS_ACIRCUMFLEX:
+            if (shifted) { send_unicode_string("Â"); }
+            else         { send_unicode_string("â"); }  break;
+        case CS_ECIRCUMFLEX:
+            if (shifted) { send_unicode_string("Ê"); }
+            else         { send_unicode_string("ê"); }  break;
+        case CS_ICIRCUMFLEX:
+            if (shifted) { send_unicode_string("Î"); }
+            else         { send_unicode_string("î"); }  break;
+        case CS_OCIRCUMFLEX:
+            if (shifted) { send_unicode_string("Ô"); }
+            else         { send_unicode_string("ô"); }  break;
+        case CS_UCIRCUMFLEX:
+            if (shifted) { send_unicode_string("Û"); }
+            else         { send_unicode_string(""); }  break;
+
+        case CS_EDIAERESIS:
+            if (shifted) { send_unicode_string("Ë"); }
+            else         { send_unicode_string("ë"); }  break;
+        case CS_IDIAERESIS:
+            if (shifted) { send_unicode_string("Ï"); }
+            else         { send_unicode_string("ï"); }  break;
+        case CS_UDIAERESIS:
+            if (shifted) { send_unicode_string("Ü"); }
+            else         { send_unicode_string("ü"); }  break;
+        case CS_YDIAERESIS:
+            if (shifted) { send_unicode_string("Ÿ"); }
+            else         { send_unicode_string("ÿ"); }  break;
+
 
         default:
             if (shifted) {
