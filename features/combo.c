@@ -20,8 +20,8 @@ enum combos {
     A_GRAVE,
     E_GRAVE,
     U_GRAVE,
-    C_CEDILLA,
 
+    C_CEDILLA,
     E_A,
     E_O,
 
@@ -66,10 +66,14 @@ enum combos {
     POUND,
 
     // --
-    // MAIL_SHORT,
-        // KC_MAIL_SHORT,
-    // MAIL_LONG,
-        // KC_MAIL_LONG,
+    DEGREE,
+    SUPERSCRIPT_1,
+    SUPERSCRIPT_2,
+    SUPERSCRIPT_3,
+
+    // --
+    MAIL_SHORT,
+    MAIL_LONG,
 
     COMBO_LENGTH, // Just to replace the define in config.h
 };
@@ -91,11 +95,11 @@ const uint16_t PROGMEM combo_control_shift_alt[] = {KC_LCPO, KC_S, KC_A, COMBO_E
 const uint16_t PROGMEM combo_right_alt[] = {KC_LALT, KC_G, COMBO_END};
 
 // --
-const uint16_t PROGMEM combo_a_grave[] = {KC_E, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_e_grave[] = {CS_EACUTE, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_u_grave[] = {KC_E, KC_U, COMBO_END};
-const uint16_t PROGMEM combo_c_cedilla[] = {KC_E, KC_C, COMBO_END};
+const uint16_t PROGMEM combo_a_grave[] = {KC_G, KC_R, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_e_grave[] = {KC_G, KC_R, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_u_grave[] = {KC_G, KC_R, KC_U, COMBO_END};
 
+const uint16_t PROGMEM combo_c_cedilla[] = {CS_EACUTE, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_ea[] = {CS_EACUTE, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_eo[] = {CS_EACUTE, KC_O, COMBO_END};
 
@@ -132,12 +136,15 @@ const uint16_t PROGMEM combo_dollar[] = {KC_D, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_euro[] = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_pound[] = {KC_P, KC_D, COMBO_END};
 
-// With macros !
-// const uint16_t PROGMEM combo_mail_short[] = {KC_M, KC_S, COMBO_END};
-// const uint16_t PROGMEM us_combo_mail_short[] = {KC_M, KC_S, COMBO_END};
+// --
+const uint16_t PROGMEM combo_degree[] = {KC_D, KC_G, KC_R, COMBO_END};
+const uint16_t PROGMEM combo_superscript_1[] = {KC_CIRC, KC_1, COMBO_END};
+const uint16_t PROGMEM combo_superscript_2[] = {KC_CIRC, KC_2, COMBO_END};
+const uint16_t PROGMEM combo_superscript_3[] = {KC_CIRC, KC_3, COMBO_END};
 
-// const uint16_t PROGMEM combo_mail_long[] = {KC_M, KC_L, COMBO_END};
-// const uint16_t PROGMEM us_combo_mail_long[] = {KC_M, KC_L, COMBO_END};
+// With macros !
+const uint16_t PROGMEM combo_mail_short[] = {KC_M, KC_S, COMBO_END};
+const uint16_t PROGMEM combo_mail_long[] = {KC_M, KC_L, COMBO_END};
 
 
 // --------------------------------------------------
@@ -159,8 +166,8 @@ combo_t key_combos[] = {
     [A_GRAVE] = COMBO(combo_a_grave, CS_AGRAVE),
     [E_GRAVE] = COMBO(combo_e_grave, CS_EGRAVE),
     [U_GRAVE] = COMBO(combo_u_grave, CS_UGRAVE),
-    [C_CEDILLA] = COMBO(combo_c_cedilla, CS_CCEDILLA),
 
+    [C_CEDILLA] = COMBO(combo_c_cedilla, CS_CCEDILLA),
     [E_A] = COMBO(combo_ea, CS_AE),
     [E_O] = COMBO(combo_eo, CS_OE),
 
@@ -200,53 +207,51 @@ combo_t key_combos[] = {
     [POUND] = COMBO(combo_pound, CS_POUND),
 
     // --
-    // [MAIL_SHORT] = COMBO_ACTION(combo_mail_short),
-    // [MAIL_LONG] = COMBO_ACTION(combo_mail_long),
+    [DEGREE] = COMBO(combo_degree, CS_DEGREE),
+    [SUPERSCRIPT_1] = COMBO(combo_superscript_1, CS_SUPERSCRIPT_1),
+    [SUPERSCRIPT_2] = COMBO(combo_superscript_2, CS_SUPERSCRIPT_2),
+    [SUPERSCRIPT_3] = COMBO(combo_superscript_3, CS_SUPERSCRIPT_3),
 
-    // [KC_MAIL_SHORT] = COMBO_ACTION(us_combo_mail_short),
-    // [KC_MAIL_LONG] = COMBO_ACTION(us_combo_mail_long),
+    // --
+    [MAIL_SHORT] = COMBO_ACTION(combo_mail_short),
+    [MAIL_LONG] = COMBO_ACTION(combo_mail_long),
 };
 
 
 // --------------------------------------------------
 // --------------------------------------------------
 // Macros !
-// Impossible to use the 'sendstring_bepo.h' because of the conversion to us.
-// So bepo versions have to be converted from us (see the keymap_bepo.h file to match characters)
-// void process_combo_event(uint16_t combo_index, bool pressed) {
+void process_combo_event(uint16_t combo_index, bool pressed) {
 
-  // switch(combo_index) {
+    switch(combo_index) {
 
+        case MAIL_SHORT:
+            if (pressed) {
+                SEND_STRING("f@linguenheld.fr");
+            }
+            break;
 
-  // // switch(combo_index) {
-        // // // Apparently, it works with us and bepo :o
-    // // case MAIL_SHORT:
+        case MAIL_LONG:
+            if (pressed) {
+                SEND_STRING("florent@linguenheld.fr");
+            }
+            break;
+
+    // // case VIM_COLON:
       // // if (pressed) {
-        // // SEND_STRING("/6od;,sf;.foiv/l");
+        // // SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
       // // }
       // // break;
 
-    // // case MAIL_LONG:
+    // // case VIM_NOH:
       // // if (pressed) {
-        // // SEND_STRING("/orlf;j6od;,sf;.foiv/l");
+        // // tap_code16(KC_ESC);
+        // // tap_code16(KC_COLN);
+        // // tap_code16(KC_N);
+        // // tap_code16(KC_O);
+        // // tap_code16(KC_H);
+        // // tap_code16(KC_ENTER);
       // // }
       // // break;
-
-    // // // case VIM_COLON:
-      // // // if (pressed) {
-        // // // SEND_STRING(SS_TAP(X_ESC) SS_LSFT("a") ":" SS_TAP(X_ESC));
-      // // // }
-      // // // break;
-
-    // // // case VIM_NOH:
-      // // // if (pressed) {
-        // // // tap_code16(KC_ESC);
-        // // // tap_code16(KC_COLN);
-        // // // tap_code16(KC_N);
-        // // // tap_code16(KC_O);
-        // // // tap_code16(KC_H);
-        // // // tap_code16(KC_ENTER);
-      // // // }
-      // // // break;
-  // // }
-// }
+    }
+}

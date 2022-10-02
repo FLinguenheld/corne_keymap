@@ -34,33 +34,43 @@ Or outside the folder :
 
 #### Keymap
 
-Put the us-intl keymap :
+All french letters are print with unicode.
+Use the standard us keymap :
 
-    setxkbmap -layout us -variant intl
+    setxkbmap -layout us
 
 
 #### Combos
 
-|      keys        |                        |
+
+|     French       |                        |
 |------------------|------------------------|
-|   tab + del      |   switch to us         |
-|   lower + raise  |   adjust               |
-|   arrows + f     |   fn (osl)             |
+|   g + r + a      |   à                    |
+|   g + r + e      |   è                    |
+|   g + r + u      |   ù                    |
+|   é + c          |   ç                    |
 |   é + a          |   æ                    |
 |   é + o          |   œ                    |
-|   e + é          |   è                    |
-|   e + a          |   à                    |
-|   e + c          |   ç                    |
-|   e + u          |   ù                    |
+|   c + r + a      |   â                    |
+|   c + r + e      |   ê                    |
+|   c + r + i      |   î                    |
+|   c + r + o      |   ô                    |
+|   t + r + e      |   ë                    |
+|   t + r + i      |   ï                    |
+|   t + r + u      |   ü                    |
+|   t + r + y      |   ÿ                    |
+
+|      Keys        |                        |
+|------------------|------------------------|
+|   mouse + arrows |   adjust               |
+|   arrows + f     |   fn                   |
 |   a + t          |   @                    |
 |   c + r          |   ^                    |
+|   g + r          |   \`                   |
 |   d + '          |   "                    |
-|   g + r          |   `                    |
-|   d + l          |   $                    |
-|   e + r          |   €  (bépo)            |
 |   h + s          |   #                    |
 |   a + p          |   &                    |
-|   p + e          |   pipe                 |
+|   p + e          |   \|                   |
 |   s + l          |   /                    |
 |   d + r          |   \                    |
 |   t + d          |   ~                    |
@@ -71,6 +81,17 @@ Put the us-intl keymap :
 |   p + c          |   %                    |
 |   s + t          |   *                    |
 |   enter + s      |   shifted enter        |
+|   d + l          |   $                    |
+|   e + r          |   €                    |
+|   p + d          |   £                    |
+
+|     Special      |                        |
+|------------------|------------------------|
+|   d + g + r      |   °                    |
+|   ^ + 1          |   ¹                    |
+|   ^ + 2          |   ²                    |
+|   ^ + 3          |   ³                    |
+
 
 #### Layouts
 

@@ -51,9 +51,14 @@ enum custom_keys {
     CS_UDIAERESIS,
     CS_YDIAERESIS,
 
-    // Without, manage here
+    // Without, managed here
     CS_EURO,
     CS_POUND,
+
+    CS_DEGREE,
+    CS_SUPERSCRIPT_1,
+    CS_SUPERSCRIPT_2,
+    CS_SUPERSCRIPT_3,
 };
 
 // --
@@ -85,6 +90,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case CS_POUND:
             if (record->event.pressed) { send_unicode_string("£"); }
+            break;
+
+        case CS_DEGREE:
+            if (record->event.pressed) { send_unicode_string("°"); }
+            break;
+        case CS_SUPERSCRIPT_1:
+            if (record->event.pressed) { send_unicode_string("¹"); }
+            break;
+        case CS_SUPERSCRIPT_2:
+            if (record->event.pressed) { send_unicode_string("²"); }
+            break;
+        case CS_SUPERSCRIPT_3:
+            if (record->event.pressed) { send_unicode_string("³"); }
             break;
     }
 

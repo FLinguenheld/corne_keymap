@@ -20,6 +20,7 @@ UNICODEMAP_ENABLE = no
 
 
 # Reduce the size !
+# Extra keys allow to save 324 bytes
 AUDIO_ENABLE = no
 BACKLIGHT_ENABLE = no
 BLUETOOTH_ENABLE = no
