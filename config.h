@@ -32,7 +32,6 @@
 #define AUTO_SHIFT_TIMEOUT 115
 
 // Redefine CTRL + space
-// The equivalent TD(ALT, TREMA) doesn't work
 // See space cadet shift
 #define LCPO_KEYS KC_LCTL, KC_TRNS, KC_SPC
 

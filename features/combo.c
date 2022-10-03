@@ -67,6 +67,7 @@ enum combos {
 
     // --
     DEGREE,
+    DIAMETER,
     SUPERSCRIPT_1,
     SUPERSCRIPT_2,
     SUPERSCRIPT_3,
@@ -138,6 +139,7 @@ const uint16_t PROGMEM combo_pound[] = {KC_P, KC_D, COMBO_END};
 
 // --
 const uint16_t PROGMEM combo_degree[] = {KC_D, KC_G, KC_R, COMBO_END};
+const uint16_t PROGMEM combo_diameter[] = {KC_D, KC_I, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_superscript_1[] = {KC_CIRC, KC_1, COMBO_END};
 const uint16_t PROGMEM combo_superscript_2[] = {KC_CIRC, KC_2, COMBO_END};
 const uint16_t PROGMEM combo_superscript_3[] = {KC_CIRC, KC_3, COMBO_END};
@@ -208,6 +210,7 @@ combo_t key_combos[] = {
 
     // --
     [DEGREE] = COMBO(combo_degree, CS_DEGREE),
+    [DIAMETER] = COMBO(combo_diameter, CS_DIAMETER),
     [SUPERSCRIPT_1] = COMBO(combo_superscript_1, CS_SUPERSCRIPT_1),
     [SUPERSCRIPT_2] = COMBO(combo_superscript_2, CS_SUPERSCRIPT_2),
     [SUPERSCRIPT_3] = COMBO(combo_superscript_3, CS_SUPERSCRIPT_3),

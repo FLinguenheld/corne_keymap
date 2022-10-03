@@ -76,6 +76,8 @@ bool get_custom_auto_shifted_key(uint16_t keycode, keyrecord_t *record) {
         case CS_UDIAERESIS:
         case CS_YDIAERESIS:
 
+        case CS_DIAMETER:
+
             return true;
 
         default:
@@ -133,7 +135,7 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             else         { send_unicode_string("ô"); }  break;
         case CS_UCIRCUMFLEX:
             if (shifted) { send_unicode_string("Û"); }
-            else         { send_unicode_string(""); }  break;
+            else         { send_unicode_string("û"); }  break;
 
         case CS_EDIAERESIS:
             if (shifted) { send_unicode_string("Ë"); }
@@ -148,6 +150,10 @@ void autoshift_press_user(uint16_t keycode, bool shifted, keyrecord_t *record) {
             if (shifted) { send_unicode_string("Ÿ"); }
             else         { send_unicode_string("ÿ"); }  break;
 
+
+        case CS_DIAMETER:
+            if (shifted) { send_unicode_string("Ø"); }
+            else         { send_unicode_string("ø"); }  break;
 
         default:
             if (shifted) {

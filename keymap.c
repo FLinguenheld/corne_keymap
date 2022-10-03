@@ -56,6 +56,7 @@ enum custom_keys {
     CS_POUND,
 
     CS_DEGREE,
+    CS_DIAMETER,
     CS_SUPERSCRIPT_1,
     CS_SUPERSCRIPT_2,
     CS_SUPERSCRIPT_3,
