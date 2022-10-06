@@ -32,8 +32,11 @@
 #define AUTO_SHIFT_TIMEOUT 115
 
 // Redefine CTRL + space
+//          RSHIFT + "
 // See space cadet shift
 #define LCPO_KEYS KC_LCTL, KC_TRNS, KC_SPC
+#define RSPC_KEYS KC_RSFT, KC_RSFT, KC_QUOTE
+
 
 // Unicode
 #define UNICODE_SELECTED_MODES UC_LNX

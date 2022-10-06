@@ -9,7 +9,7 @@ My personal keymap for the corne keyboard.
 
 Copy this repo in the folder :
 
-    ~/qmk_firmware/keyboards/crkbd/
+    ~/qmk_firmware/keyboards/crkbd/keymaps/
 
 #### Compile and flash
 
@@ -45,20 +45,20 @@ Use the standard us keymap :
 
 |     French       |                        |
 |------------------|------------------------|
-|   g + r + a      |   à                    |
-|   g + r + e      |   è                    |
-|   g + r + u      |   ù                    |
 |   é + c          |   ç                    |
 |   é + a          |   æ                    |
 |   é + o          |   œ                    |
-|   c + r + a      |   â                    |
-|   c + r + e      |   ê                    |
-|   c + r + i      |   î                    |
-|   c + r + o      |   ô                    |
-|   t + r + e      |   ë                    |
-|   t + r + i      |   ï                    |
-|   t + r + u      |   ü                    |
-|   t + r + y      |   ÿ                    |
+|   g +     a      |   à                    |
+|   g +     e      |   è                    |
+|   g +     u      |   ù                    |
+|   c +     a      |   â                    |
+|   c +     e      |   ê                    |
+|   c +     i      |   î                    |
+|   c +     o      |   ô                    |
+|   t +     e      |   ë                    |
+|   t +     i      |   ï                    |
+|   t +     u      |   ü                    |
+|   t +     y      |   ÿ                    |
 
 |      Keys        |                        |
 |------------------|------------------------|
@@ -67,18 +67,17 @@ Use the standard us keymap :
 |   a + t          |   @                    |
 |   c + r          |   ^                    |
 |   g + r          |   \`                   |
-|   d + '          |   "                    |
 |   h + s          |   #                    |
-|   a + p          |   &                    |
-|   p + e          |   \|                   |
+|   a + e          |   &                    |
+|   i + e          |   \|                   |
 |   s + l          |   /                    |
 |   d + r          |   \                    |
 |   t + d          |   ~                    |
 |   s + r          |   _                    |
 |   t + r          |   -                    |
-|   p + l          |   +                    |
-|   e + q          |   =                    |
-|   p + c          |   %                    |
+|   p + u          |   +                    |
+|   e + u          |   =                    |
+|   p + e          |   %                    |
 |   s + t          |   *                    |
 |   enter + s      |   shifted enter        |
 |   d + l          |   $                    |

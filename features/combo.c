@@ -47,7 +47,6 @@ enum combos {
     AT,
     BACKSLASH,
     CIRCUMFLEX,
-    DOUBLE_QUOTE,
     EQUAL,
 
     GRAVE,
@@ -96,36 +95,35 @@ const uint16_t PROGMEM combo_control_shift_alt[] = {KC_LCPO, KC_S, KC_A, COMBO_E
 const uint16_t PROGMEM combo_right_alt[] = {KC_LALT, KC_G, COMBO_END};
 
 // --
-const uint16_t PROGMEM combo_a_grave[] = {KC_G, KC_R, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_e_grave[] = {KC_G, KC_R, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_u_grave[] = {KC_G, KC_R, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_a_grave[] = {KC_G, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_e_grave[] = {KC_G, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_u_grave[] = {KC_G, KC_U, COMBO_END};
 
 const uint16_t PROGMEM combo_c_cedilla[] = {CS_EACUTE, KC_C, COMBO_END};
 const uint16_t PROGMEM combo_ea[] = {CS_EACUTE, KC_A, COMBO_END};
 const uint16_t PROGMEM combo_eo[] = {CS_EACUTE, KC_O, COMBO_END};
 
-const uint16_t PROGMEM combo_a_circumflex[] = {KC_C, KC_R, KC_A, COMBO_END};
-const uint16_t PROGMEM combo_e_circumflex[] = {KC_C, KC_R, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_i_circumflex[] = {KC_C, KC_R, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_o_circumflex[] = {KC_C, KC_R, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_u_circumflex[] = {KC_C, KC_R, KC_U, COMBO_END};
-const uint16_t PROGMEM combo_e_diaeresis[] = {KC_T, KC_R, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_i_diaeresis[] = {KC_T, KC_R, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_u_diaeresis[] = {KC_T, KC_R, KC_U, COMBO_END};
-const uint16_t PROGMEM combo_y_diaeresis[] = {KC_T, KC_R, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_a_circumflex[] = {KC_C, KC_A, COMBO_END};
+const uint16_t PROGMEM combo_e_circumflex[] = {KC_C, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_i_circumflex[] = {KC_C, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_o_circumflex[] = {KC_C, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_u_circumflex[] = {KC_C, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_e_diaeresis[] = {KC_T, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_i_diaeresis[] = {KC_T, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_u_diaeresis[] = {KC_T, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_y_diaeresis[] = {KC_T, KC_Y, COMBO_END};
 
 // --
-const uint16_t PROGMEM combo_ampersand[] = {KC_A, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_ampersand[] = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_at[] = {KC_A, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backslash[] = {KC_D, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_circumflex[] = {KC_C, KC_R, COMBO_END};
-const uint16_t PROGMEM combo_double_quote[] = {KC_D, KC_QUOT, COMBO_END};
-const uint16_t PROGMEM combo_equal[] = {KC_E, KC_Q, COMBO_END};
+const uint16_t PROGMEM combo_equal[] = {KC_E, KC_U, COMBO_END};
 const uint16_t PROGMEM combo_grave[] = {KC_G, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_hash[] = {KC_H, KC_S, COMBO_END};
-const uint16_t PROGMEM combo_percent[] = {KC_P, KC_C, COMBO_END};
-const uint16_t PROGMEM combo_pipe[] = {KC_P, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_plus[] = {KC_P, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_percent[] = {KC_P, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_pipe[] = {KC_I, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_plus[] = {KC_P, KC_U, COMBO_END};
 const uint16_t PROGMEM combo_slash[] = {KC_S, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_star[] = {KC_S, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_tilde[] = {KC_T, KC_D, COMBO_END};
@@ -190,7 +188,6 @@ combo_t key_combos[] = {
     [AT] = COMBO(combo_at, KC_AT),
     [BACKSLASH] = COMBO(combo_backslash, KC_BSLS),
     [CIRCUMFLEX] = COMBO(combo_circumflex, KC_CIRC),
-    [DOUBLE_QUOTE] = COMBO(combo_double_quote, KC_DQUO),
     [EQUAL] = COMBO(combo_equal, KC_EQL),
     [GRAVE] = COMBO(combo_grave, KC_GRV),
     [HASH] = COMBO(combo_hash, KC_HASH),
