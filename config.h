@@ -42,7 +42,7 @@
 #define UNICODE_SELECTED_MODES UC_LNX
 
 // One shot deactivated (allows to save 700 ko)
-#define NO_ACTION_ONESHOT
+// #define NO_ACTION_ONESHOT
 
 // Mouse
 #define MK_3_SPEED
