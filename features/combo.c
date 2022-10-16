@@ -46,7 +46,6 @@ enum combos {
 
     // --
     AMPERSAND,
-    AT,
     BACKSLASH,
     CIRCUMFLEX,
     EQUAL,
@@ -126,7 +125,6 @@ const uint16_t PROGMEM combo_y_diaeresis[] =            {KC_SCLN, KC_Y, COMBO_EN
 
 // --
 const uint16_t PROGMEM combo_ampersand[] =              {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM combo_at[] =                     {KC_A, KC_T, COMBO_END};
 const uint16_t PROGMEM combo_backslash[] =              {KC_D, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_circumflex[] =             {KC_C, KC_R, COMBO_END};
 const uint16_t PROGMEM combo_equal[] =                  {KC_E, KC_U, COMBO_END};
@@ -206,7 +204,6 @@ combo_t key_combos[] = {
     // --
     [AMPERSAND] = COMBO(combo_ampersand,                    KC_AMPR),
 
-    [AT] = COMBO(combo_at,                                  KC_AT),
     [BACKSLASH] = COMBO(combo_backslash,                    KC_BSLS),
     [CIRCUMFLEX] = COMBO(combo_circumflex,                  KC_CIRC),
     [EQUAL] = COMBO(combo_equal,                            KC_EQL),

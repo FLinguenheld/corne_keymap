@@ -64,7 +64,6 @@ Use the standard us keymap :
 |------------------|------------------------|
 |   mouse + arrows |   adjust               |
 |   arrows + f     |   fn                   |
-|   a + t          |   @                    |
 |   c + r          |   ^                    |
 |   g + r          |   \`                   |
 |   h + s          |   #                    |
